@@ -1,0 +1,92 @@
+\documentclass[a4paper,11pt,oneside]{book}
+
+\usepackage{etoolbox}
+
+\newbool{printed}
+
+%\booltrue{printed}
+\boolfalse{printed} % Default
+
+\makeatletter
+\patchcmd{\@chapter}%
+	{\chaptermark{#1}}%
+	{\chaptermark{#1}%
+	\addtocontents{loa}{\protect\addvspace{10\p@}}}%
+	{}{}%
+\makeatother
+
+\usepackage{polyglossia}
+\usepackage{fontspec}
+\usepackage{csquotes}
+\usepackage{geometry}
+\usepackage[intlimits]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{url}
+\usepackage[backend=biber,style=iso-authoryear,sortlocale=cs_CZ,autolang=other,bibencoding=UTF8]{biblatex}
+\usepackage{setspace}
+\usepackage[\ifbool{printed}{hidelinks}{colorlinks}]{hyperref}
+\usepackage{braket}
+\usepackage{enumerate}
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+
+\geometry{tmargin=4cm,bmargin=3cm,lmargin=3cm,rmargin=2cm,headheight=0.8cm,headsep=1cm,footskip=0.5cm,marginparwidth=1.6cm}
+\setdefaultlanguage{english}
+\setotherlanguage{czech}
+\setmainfont{TeX Gyre Termes}
+\setcounter{secnumdepth}{3}
+\addbibresource{zotero.bib}
+\hypersetup{
+	pdfencoding=auto,
+	unicode=true,
+	bookmarksopen=true,
+	bookmarksopenlevel=3,
+	citecolor=green,
+	filecolor=blue,
+	linkcolor=red,
+	urlcolor=blue
+}
+
+% BibLaTeX fixes
+\def\UrlBreaks{\do\/\do-}
+\renewbibmacro{labeltitle}{}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\theoremstyle{definition}
+\newtheorem{define}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\VUname}[1]{\textbf{#1}}
+
+\newcommand{\VUspace}{\ensuremath{\mathcal}}
+\newcommand{\VUfield}{\ensuremath{\mathbb}}
+\newcommand{\VUset}{\ensuremath{\mathbb}}
+\newcommand{\VUmat}{\ensuremath{\mathbf}}
+
+\MakeRobust{\Call}
+\algnewcommand\algorithmicparallelfor{\textbf{parallel for}}
+\algdef{S}[FOR]{ParallelFor}[1]{\algorithmicparallelfor\ #1\ \algorithmicdo}
+\algnewcommand\algorithmicbreak{\State\textbf{break}}
+\algnewcommand\Break{\algorithmicbreak{}}
+
+\newcommand{\result}[3]{%
+	\begin{graph}[h]%
+		\centering%
+		\includegraphics[width=\textwidth]{images/results/#1}%
+		\caption{#3}\label{#2}%
+	\end{graph}%
+}
+
+\floatstyle{plain}
+\newfloat{graph}{tbph}{logr}[chapter]
+\floatname{graph}{Chart}

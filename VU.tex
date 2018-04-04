@@ -1,0 +1,60 @@
+\input{preamble.tex}
+
+\begin{document}
+\def\documentdate{June 1\textsuperscript{st} 2018}
+
+\pagestyle{empty}
+
+\input{titlepage.tex}
+
+\clearpage
+
+\null\vfill
+\begin{center}
+	- Zadání práce -
+\end{center}
+\vfill
+
+\clearpage
+
+\input{acknowledgment.tex}
+
+\clearpage
+
+\input{abstract.tex}
+
+\clearpage
+
+\pagestyle{plain}
+
+\tableofcontents
+
+\input{introduction.tex}
+
+\pagestyle{headings}
+
+\input{chapter.tex}
+
+\pagestyle{plain}
+
+\input{conclusion.tex}
+
+\clearpage
+
+\begingroup
+	\let\clearpage\relax
+
+	\listoffigures
+	\addcontentsline{toc}{chapter}{List of Figures}
+	\listof{graph}{List of Charts}
+	\addcontentsline{toc}{chapter}{List of Charts}
+	\listoftables
+	\addcontentsline{toc}{chapter}{List of Tables}
+	\listofalgorithms
+	\addcontentsline{toc}{chapter}{List of Algorithms}
+\endgroup
+
+\printbibliography
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\end{document}

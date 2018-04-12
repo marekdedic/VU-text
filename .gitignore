@@ -239,4 +239,5 @@ tags
 # End of https://www.gitignore.io/api/vim,latex
 
 VU.pdf
+cover/cover.pdf
 *.logr

@@ -1,10 +1,25 @@
 
-@video{__18._????,
-	title = {18. Information Theory of Deep Learning. Naftali Tishby},
+@inproceedings{tishby_information_2017,
+	location = {Berlin},
+	title = {Information Theory of Deep Learning},
 	url = {https://www.youtube.com/watch?v=bLqJHjXihK8},
-	author = {{Компьютерные науки}},
+	eventtitle = {Deep Learning: Theory, Algorithms, and Applications},
+	author = {Tishby, Naftali},
 	urldate = {2018-04-05},
+	date = {2017-06-25},
 	keywords = {Combinatorial Pattern Matching, {CPM}, Yandex, Яндекс}
+}
+
+@article{cauchy_methode_1847,
+	title = {Méthode générale pour la résolution des systemes d’équations simultanées},
+	volume = {25},
+	url = {https://www.cs.xu.edu/math/Sources/Cauchy/Orbits/1847%20CR%20536(383).pdf},
+	pages = {536--538},
+	number = {1847},
+	journaltitle = {Comp. Rend. Sci. Paris},
+	author = {Cauchy, Augustin},
+	urldate = {2017-07-04},
+	date = {1847}
 }
 
 @book{goodfellow_deep_2016,
@@ -16,4 +31,103 @@
 	publisher = {The {MIT} Press},
 	author = {Goodfellow, Ian and Bengio, Yoshua and Courville, Aaron},
 	date = {2016-11-18}
+}
+
+@article{kingma_adam:_2014,
+	title = {Adam: A Method for Stochastic Optimization},
+	url = {http://arxiv.org/abs/1412.6980},
+	shorttitle = {Adam},
+	abstract = {We introduce Adam, an algorithm for first-order gradient-based optimization of stochastic objective functions, based on adaptive estimates of lower-order moments. The method is straightforward to implement, is computationally efficient, has little memory requirements, is invariant to diagonal rescaling of the gradients, and is well suited for problems that are large in terms of data and/or parameters. The method is also appropriate for non-stationary objectives and problems with very noisy and/or sparse gradients. The hyper-parameters have intuitive interpretations and typically require little tuning. Some connections to related algorithms, on which Adam was inspired, are discussed. We also analyze the theoretical convergence properties of the algorithm and provide a regret bound on the convergence rate that is comparable to the best known results under the online convex optimization framework. Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss {AdaMax}, a variant of Adam based on the infinity norm.},
+	journaltitle = {{arXiv}:1412.6980 [cs]},
+	author = {Kingma, Diederik P. and Ba, Jimmy},
+	urldate = {2017-04-19},
+	date = {2014-12-22},
+	eprinttype = {arxiv},
+	eprint = {1412.6980},
+	keywords = {Computer Science - Learning}
+}
+
+@article{rumelhart_learning_1986,
+	title = {Learning representations by back-propagating errors},
+	volume = {323},
+	rights = {1986 Nature Publishing Group},
+	issn = {1476-4687},
+	url = {https://www.nature.com/articles/323533a0},
+	doi = {10.1038/323533a0},
+	abstract = {We describe a new learning procedure, back-propagation, for networks of neurone-like units. The procedure repeatedly adjusts the weights of the connections in the network so as to minimize a measure of the difference between the actual output vector of the net and the desired output vector. As a result of the weight adjustments, internal ‘hidden’ units which are not part of the input or output come to represent important features of the task domain, and the regularities in the task are captured by the interactions of these units. The ability to create useful new features distinguishes back-propagation from earlier, simpler methods such as the perceptron-convergence procedure1.},
+	pages = {533--536},
+	number = {6088},
+	journaltitle = {Nature},
+	author = {Rumelhart, David E. and Hinton, Geoffrey E. and Williams, Ronald J.},
+	urldate = {2018-04-05},
+	date = {1986-10},
+	langid = {english},
+	file = {Snapshot:/home/cisco/Zotero/storage/XZC5LZK3/323533a0.html:text/html}
+}
+
+@incollection{no_kland_direct_2016,
+	title = {Direct Feedback Alignment Provides Learning in Deep Neural Networks},
+	url = {http://papers.nips.cc/paper/6441-direct-feedback-alignment-provides-learning-in-deep-neural-networks.pdf},
+	pages = {1037--1045},
+	booktitle = {Advances in Neural Information Processing Systems 29},
+	publisher = {Curran Associates, Inc.},
+	author = {Nø kland, Arild},
+	editor = {Lee, D. D. and Sugiyama, M. and Luxburg, U. V. and Guyon, I. and Garnett, R.},
+	date = {2016}
+}
+
+@article{lillicrap_random_2016,
+	title = {Random synaptic feedback weights support error backpropagation for deep learning},
+	volume = {7},
+	url = {http://dx.doi.org/10.1038/ncomms13276},
+	pages = {13276},
+	journaltitle = {Nature Communications},
+	shortjournal = {Nature Communications},
+	author = {Lillicrap, Timothy P. and Cownden, Daniel and Tweed, Douglas B. and Akerman, Colin J.},
+	date = {2016-11-08}
+}
+
+@incollection{cun_learning_1986,
+	title = {Learning Process in an Asymmetric Threshold Network},
+	isbn = {978-3-642-82659-7 978-3-642-82657-3},
+	url = {https://link.springer.com/chapter/10.1007/978-3-642-82657-3_24},
+	series = {{NATO} {ASI} Series},
+	abstract = {Threshold functions and related operators are widely used as basic elements of adaptive and associative networks [Nakano 72, Amari 72, Hopfield 82]. There exist numerous learning rules for finding a set of weights to achieve a particular correspondence between input-output pairs. But early works in the field have shown that the number of threshold functions (or linearly separable functions) in N binary variables is small compared to the number of all possible boolean mappings in N variables, especially if N is large. This problem is one of the main limitations of most neural networks models where the state is fully specified by the environment during learning: they can only learn linearly separable functions of their inputs. Moreover, a learning procedure which requires the outside world to specify the state of every neuron during the learning session can hardly be considered as a general learning rule because in real-world conditions, only a partial information on the “ideal” network state for each task is available from the environment. It is possible to use a set of so-called “hidden units” [Hinton,Sejnowski,Ackley. 84], without direct interaction with the environment, which can compute intermediate predicates. Unfortunately, the global response depends on the output of a particular hidden unit in a highly non-linear way, moreover the nature of this dependence is influenced by the states of the other cells.},
+	pages = {233--240},
+	booktitle = {Disordered Systems and Biological Organization},
+	publisher = {Springer, Berlin, Heidelberg},
+	author = {Cun, Yann Le},
+	urldate = {2018-04-11},
+	date = {1986},
+	langid = {english},
+	doi = {10.1007/978-3-642-82657-3_24},
+	file = {Snapshot:/home/cisco/Zotero/storage/Z27BNTXN/978-3-642-82657-3_24.html:text/html}
+}
+
+@article{bengio_how_2014,
+	title = {How Auto-Encoders Could Provide Credit Assignment in Deep Networks via Target Propagation},
+	url = {http://arxiv.org/abs/1407.7906},
+	abstract = {We propose to exploit \{{\textbackslash}em reconstruction\} as a layer-local training signal for deep learning. Reconstructions can be propagated in a form of target propagation playing a role similar to back-propagation but helping to reduce the reliance on derivatives in order to perform credit assignment across many levels of possibly strong non-linearities (which is difficult for back-propagation). A regularized auto-encoder tends produce a reconstruction that is a more likely version of its input, i.e., a small move in the direction of higher likelihood. By generalizing gradients, target propagation may also allow to train deep networks with discrete hidden units. If the auto-encoder takes both a representation of input and target (or of any side information) in input, then its reconstruction of input representation provides a target towards a representation that is more likely, conditioned on all the side information. A deep auto-encoder decoding path generalizes gradient propagation in a learned way that can could thus handle not just infinitesimal changes but larger, discrete changes, hopefully allowing credit assignment through a long chain of non-linear operations. In addition to each layer being a good auto-encoder, the encoder also learns to please the upper layers by transforming the data into a space where it is easier to model by them, flattening manifolds and disentangling factors. The motivations and theoretical justifications for this approach are laid down in this paper, along with conjectures that will have to be verified either mathematically or experimentally, including a hypothesis stating that such auto-encoder mediated target propagation could play in brains the role of credit assignment through many non-linear, noisy and discrete transformations.},
+	journaltitle = {{arXiv}:1407.7906 [cs]},
+	author = {Bengio, Yoshua},
+	urldate = {2018-04-11},
+	date = {2014-07-29},
+	eprinttype = {arxiv},
+	eprint = {1407.7906},
+	keywords = {Computer Science - Learning},
+	file = {arXiv\:1407.7906 PDF:/home/cisco/Zotero/storage/LGBVH5GW/Bengio - 2014 - How Auto-Encoders Could Provide Credit Assignment .pdf:application/pdf;arXiv.org Snapshot:/home/cisco/Zotero/storage/KIV2QY8H/1407.html:text/html}
+}
+
+@article{bengio_towards_2015,
+	title = {Towards Biologically Plausible Deep Learning},
+	url = {http://arxiv.org/abs/1502.04156},
+	abstract = {Neuroscientists have long criticised deep learning algorithms as incompatible with current knowledge of neurobiology. We explore more biologically plausible versions of deep representation learning, focusing here mostly on unsupervised learning but developing a learning mechanism that could account for supervised, unsupervised and reinforcement learning. The starting point is that the basic learning rule believed to govern synaptic weight updates (Spike-Timing-Dependent Plasticity) arises out of a simple update rule that makes a lot of sense from a machine learning point of view and can be interpreted as gradient descent on some objective function so long as the neuronal dynamics push firing rates towards better values of the objective function (be it supervised, unsupervised, or reward-driven). The second main idea is that this corresponds to a form of the variational {EM} algorithm, i.e., with approximate rather than exact posteriors, implemented by neural dynamics. Another contribution of this paper is that the gradients required for updating the hidden states in the above variational interpretation can be estimated using an approximation that only requires propagating activations forward and backward, with pairs of layers learning to form a denoising auto-encoder. Finally, we extend the theory about the probabilistic interpretation of auto-encoders to justify improved sampling schemes based on the generative interpretation of denoising auto-encoders, and we validate all these ideas on generative learning tasks.},
+	journaltitle = {{arXiv}:1502.04156 [cs]},
+	author = {Bengio, Yoshua and Lee, Dong-Hyun and Bornschein, Jorg and Mesnard, Thomas and Lin, Zhouhan},
+	urldate = {2018-04-11},
+	date = {2015-02-13},
+	eprinttype = {arxiv},
+	eprint = {1502.04156},
+	keywords = {Computer Science - Learning},
+	file = {arXiv\:1502.04156 PDF:/home/cisco/Zotero/storage/HG27FEWU/Bengio et al. - 2015 - Towards Biologically Plausible Deep Learning.pdf:application/pdf;arXiv.org Snapshot:/home/cisco/Zotero/storage/MDB4SE67/1502.html:text/html}
 }

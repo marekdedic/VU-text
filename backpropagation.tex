@@ -22,7 +22,7 @@ This theorem can be generalized for vectors:
 
 And this theorem can in turn be similarly generalized for tensors:
 
-\begin{theorem}
+\begin{theorem}\label{chain_rule_tensor}
 	Let \( \VUmat{X} \) be a tensor, \( f \) and \( g \) functions. Let \( \VUmat{Y} = f \left( \VUmat{X} \right) \) and \( z = g \left( \VUmat{Y} \right) \). Then
 	\[ \nabla_{\VUmat{X}} z = \sum_j \left( \nabla_{\VUmat{X}} Y_j \right) \frac{\partial z}{\partial Y_j} \]
 	where \( j \) is a tuple of indices for \( \VUmat{Y} \).
@@ -70,15 +70,26 @@ where
 If the nodes are reverse topologically ordered and the gradients computed in this order, then each of the necessary partial derivatives needed to compute \( \frac{\partial y}{\partial u_i} \) has already been computed. Using this approach, the gradient for each node is computed only once during the run of the algorithm. \todo{Algorithm - as algorithm 6.5 in Deep learning}
 
 \section{Application of back-propagation to deep feedforward neural networks}
-A deep feedforward neural network (also known as a \VUname{multilayer perceptron}) can be seen as a special case of a computational graph. Each layer can be represented as
-\[ \VUvec y = f \left( \VUvec{x} ; \VUvec{\theta} \right) = \sigma \left( \VUmat{W}^T \VUvec x + \VUvec{b} \right) \]
-where \( \VUvec{x} \) is the input of the layer, \( \VUvec{y} \) its output and
-\[ \VUvec{\theta} = \left( \VUmat{W}^T \middle| \VUvec{b} \right)^T \]
-are the parameters of the layer (the weights \( \VUmat{W} \) and the bias \( \VUvec{b} \)).
+A deep feedforward neural network (also known as a \VUname{multilayer perceptron}) can be seen as a special case of a computational graph. The \( i \)-th layer of such a network can be represented as:
+\[ \VUvec h^{(i)} = f^{(i)} \left( \VUvec{h}^{(i - 1)} ; \VUvec{\theta}^{(i)} \right) = \sigma^{(i)} \left( {\VUmat{W}^{(i)}}^T \VUvec h^{(i - 1)} + \VUvec{b}^{(i)} \right) \]
+where \( \VUvec{h}^{(i - 1)} \) is the input of the layer, \( \VUvec{h}^{(i)} \) its output and
+\[ \VUvec{\theta}^{(i)} = \left( {\VUmat{W}^{(i)}}^T \middle| \VUvec{b}^{(i)} \right)^T \]
+are the parameters of the layer (the weights \( \VUmat{W}^{(i)} \) and the bias \( \VUvec{b}^{(i)} \)).
 
-If the \( i \)-th layer is denoted \( f^{(i)} \), then a neural network with input \( \VUvec{x} \) can be represented as
-\[ J \circ f^{(n)} \circ f^{(n - 1)} \circ \dots \circ f^{(1)} \left( \VUvec{x} \right) \]
-where for each layer \( f^{(i)} \) there are corresponding parameters \( \VUvec{\theta}^{(i)} \). \( J \) is the activation function of the network.
+In such a notation, a neural network with input \( \VUvec{x} \) can be represented as
+\[ \hat{\VUvec{y}} = f^{(n)} \circ f^{(n - 1)} \circ \dots \circ f^{(1)} \left( \VUvec{x} \right) \]
+where for each layer \( f^{(i)} \) there exist corresponding parameters \( \VUvec{\theta}^{(i)} \). If \( L \) denotes the loss function of the network and \( \VUvec{y} \) is the desired output of the network for the input \( \VUvec{x} \), then the back-propagation algorithm is used to minimize the loss \( J = L \left( \hat{\VUvec{y}}, \VUvec{y} \right) \).
+
+First, the derivative of the loss with respect to the predicted output is taken:
+\[ \nabla_{\hat{\VUvec{y} }} J = \nabla_{\hat{\VUvec{y}}} L \left( \hat{\VUvec{y}}, \VUvec{y} \right) \]
+Then, for the \( i \)-th layer, theorem \ref{chain_rule_tensor} is used for the activation function \( \sigma^{(i)} \):
+\[ \nabla_{\VUvec{a}^{(i)}} J = \nabla_{\VUvec{h}^{(i)}} J \odot {\sigma^{(i)}}' \left( \VUvec{a}^{(i)} \right) \]
+where 
+\[ \VUvec{a}^{(i)} = {\VUmat{W}^{(i)}}^T \VUvec h^{(i - 1)} + \VUvec{b}^{(i)} \]
+From this value, the gradient with respect to the parameters of the layer can be computed as
+\[ \nabla_{\VUmat{W}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J {\VUvec{h}^{(i - 1)}}^T \]
+\[ \nabla_{\VUvec{b}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J \]
+If the gradients are computed backwards to the order of layers, this ordering is a reverse topological ordering of the computational graph and thus all the values required in each step of the algorithm have already been computed.
 
 This chapter has been sourced from \cite{goodfellow_deep_2016} and \cite{olah_calculus_2015}.
 \end{example}

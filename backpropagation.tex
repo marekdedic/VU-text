@@ -69,7 +69,8 @@ where
 \[ \mathrm{Desc} \left( u_i \right) = \left\{ u \middle| \exists \text{ a directed edge from } u_i \text{ to } u \right\} \]
 If the nodes are reverse topologically ordered and the gradients computed in this order, then each of the necessary partial derivatives needed to compute \( \frac{\partial y}{\partial u_i} \) has already been computed. Using this approach, the gradient for each node is computed only once during the run of the algorithm. \todo{Algorithm - as algorithm 6.5 in Deep learning}
 
-\section{Application of back-propagation to deep feedforward neural networks}
+\section{Application of back-propagation to deep feedforward neural networks}\label{backprop_application}
+
 A deep feedforward neural network (also known as a \VUname{multilayer perceptron}) can be seen as a special case of a computational graph. The \( i \)-th layer of such a network can be represented as:
 \[ \VUvec h^{(i)} = f^{(i)} \left( \VUvec{h}^{(i - 1)} ; \VUvec{\theta}^{(i)} \right) = \sigma^{(i)} \left( {\VUmat{W}^{(i)}}^T \VUvec h^{(i - 1)} + \VUvec{b}^{(i)} \right) \]
 where \( \VUvec{h}^{(i - 1)} \) is the input of the layer, \( \VUvec{h}^{(i)} \) its output and

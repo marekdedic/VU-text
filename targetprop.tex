@@ -1,3 +1,20 @@
 \chapter{Target Propagation}\label{targetprop}
 
 \VUname{Target propagation} (sometimes abbreviated to targetprop) is an alternative approach to computing the gradients of a deep feedforward neural network. The idea dates back to \cite{cun_learning_1986}, but has recently gained more interest (\cite{bengio_how_2014}, \cite{bengio_towards_2015}, \cite{lee_difference_2015}). Unlike the back-propagation algorithm, the target propagation algorithm is only defined for optimization in feedforward neural networks used in classification problems. For a high-level overview, the back-propagation algorithm can be summarized as follows: The error of the network is computed at the end of the network (after the loss function) and then back-propagated through the network to each layer, where it is used to update the layer parameters. The target propagation algorithm can be viewed as operating conversely: The desired output of the network is back-propagated through the network, creating a \VUname{target} for each layer. Such targets are then used to compute the error of each individual layer, which in turn is used to update the layer parameters.
+
+\todo{Why targetprop?}
+
+\section{General target propagation overview}
+
+Using notation from section \ref{backprop_application}, the principle of target propagation can be expressed as a problem of finding a target \( \hat{\VUvec{h}}^{(i)} \) for each layer of the neural network so that this target minimizes the loss function of the network, that is
+\[ L \left( \hat{\VUvec{y}}, \VUvec{y} \right) = L \left( f^{(n)} \circ \dots \circ f^{(i + 1)} \left( \VUvec{h}^{(i)} \right), \VUvec{y} \right) > L \left( f^{(n)} \circ \dots \circ f^{(i + 1)} \left( \hat{\VUvec{h}}^{(i)} \right), \VUvec{y} \right) \]
+With such a target a \VUname{layer-local loss function} may be defined as \( L_i \left( \hat{\VUvec{h}}^{(i)}, \VUvec{h}^{(i)} \right) \). This loss value can in turn be used to compute the gradients for the parameters of the layer as
+\[ \nabla_{\VUvec{a}^{(i)}} J = \nabla_{\VUvec{h}^{(i)}} L_i \left( \hat{\VUvec{h}}^{(i)}, \VUvec{h}^{(i)} \right) \odot {\sigma^{(i)}}' \left( \VUvec{a}^{(i)} \right) \]
+\[ \nabla_{\VUmat{W}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J {\VUvec{h}^{(i - 1)}}^T \]
+\[ \nabla_{\VUvec{b}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J \]
+To summarize, once a proper target for each layer is chosen, the derivatives can be computed using only the input of the layer and the derivatives of the layer-local loss function and the activation function of the layer.
+The open question is how to choose the targets for the layers. If all the necessary functions were invertible, the trivial choice of the target would be the inverse image of the desired output \( \VUvec{y} \). Then the layer-local loss function value would be \( L \left( \hat{\VUvec{h}}^{(i)}, \hat{\VUvec{h}}^{(i)} \right) = 0 \).
+
+\section{Vanilla target propagation}
+
+\section{Difference target propagation}

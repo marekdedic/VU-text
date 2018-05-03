@@ -78,11 +78,14 @@ where \( \VUvec{h}^{(i - 1)} \) is the input of the layer, \( \VUvec{h}^{(i)} \)
 are the parameters of the layer (the weights \( \VUmat{W}^{(i)} \) and the bias \( \VUvec{b}^{(i)} \)).
 
 In such a notation, a neural network with input \( \VUvec{x} \) can be represented as
-\[ \hat{\VUvec{y}} = f^{(n)} \circ f^{(n - 1)} \circ \dots \circ f^{(1)} \left( \VUvec{x} \right) \]
-where for each layer \( f^{(i)} \) there exist corresponding parameters \( \VUvec{\theta}^{(i)} \). If \( L \) denotes the loss function of the network and \( \VUvec{y} \) is the desired output of the network for the input \( \VUvec{x} \), then the back-propagation algorithm is used to minimize the loss \( J = L \left( \hat{\VUvec{y}}, \VUvec{y} \right) \).
+\[ \widehat{\VUvec{y}} = f^{(n)} \circ f^{(n - 1)} \circ \dots \circ f^{(1)} \left( \VUvec{x} \right) \]
+where for each layer \( f^{(i)} \) there exist corresponding parameters \( \VUvec{\theta}^{(i)} \). If \( L \) denotes the loss function of the network and \( \VUvec{y} \) is the desired output of the network for the input \( \VUvec{x} \), then the back-propagation algorithm is used to minimize the loss \( J = L \left( \widehat{\VUvec{y}}, \VUvec{y} \right) \).
+
+For simplicity, in the following text the input and predicted output are also denoted as
+\[ \VUvec{h}^{(0)} = \VUvec{x} \qquad \text{and} \qquad \VUvec{h}^{(n)} = \widehat{\VUvec{y}} \]
 
 First, the derivative of the loss with respect to the predicted output is taken:
-\[ \nabla_{\hat{\VUvec{y} }} J = \nabla_{\hat{\VUvec{y}}} L \left( \hat{\VUvec{y}}, \VUvec{y} \right) \]
+\[ \nabla_{\widehat{\VUvec{y} }} J = \nabla_{\widehat{\VUvec{y}}} L \left( \widehat{\VUvec{y}}, \VUvec{y} \right) \]
 Then, for the \( i \)-th layer, theorem \ref{chain_rule_tensor} is used for the activation function \( \sigma^{(i)} \):
 \[ \nabla_{\VUvec{a}^{(i)}} J = \nabla_{\VUvec{h}^{(i)}} J \odot {\sigma^{(i)}}' \left( \VUvec{a}^{(i)} \right) \]
 where 
@@ -90,6 +93,8 @@ where
 From this value, the gradient with respect to the parameters of the layer can be computed as
 \[ \nabla_{\VUmat{W}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J {\VUvec{h}^{(i - 1)}}^T \]
 \[ \nabla_{\VUvec{b}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J \]
+And for computing the gradients of the layer below:
+\[ \nabla_{\VUvec{h}^{(i - 1)}} J = {\VUmat{W}^{(i)}}^T \nabla_{\VUvec{a}^{(i)}} J \]
 If the gradients are computed backwards to the order of layers, this ordering is a reverse topological ordering of the computational graph and thus all the values required in each step of the algorithm have already been computed.
 
 This chapter has been sourced from \cite{goodfellow_deep_2016} and \cite{olah_calculus_2015}.

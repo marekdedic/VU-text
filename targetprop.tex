@@ -17,7 +17,7 @@ With such a target a \VUname{layer-local loss function} may be defined as \( L_i
 To summarize, once a proper target for each layer is chosen, the derivatives can be computed using only the input of the layer and the derivatives of the layer-local loss function and the activation function of the layer.
 
 The open question remaining is how to choose the targets for the layers. For the last layer of the network, the obvious choice of target is
-\begin{equation}
+\begin{equation}\label{targetprop_last_layer_target}
 	\widehat{\VUvec{h}}^{(n)} = \widehat{\VUvec{y}} - \eta \nabla_{\widehat{\VUvec{y}}} L \left( \widehat{\VUvec{y}}, \VUvec{y} \right)
 \end{equation}
 where \( \eta \) is the step size of the learning algorithm. This is the same result as in back-propagation.
@@ -41,7 +41,10 @@ This choice would, however, only minimize the error at \( \VUvec{h}^{(i - 1)} \)
 
 To prove that target propagation is an effective way to learn neural networks, \cite{lee_difference_2015} state and prove the following theorem:
 
-\begin{theorem}\todo{Theorem 1 from source}
+\begin{theorem}
+	Assume that \( \forall i \in \left\{ 1, \dots, n \right\} \) there is \( \widetilde{f}^{(i)} = {f^{(i)}}^{-1} \), \( \VUvec{h}^{(i)} = f^{(i)} \left( \VUvec{h}^{(i - 1)} \right) = \VUmat{W}^{(i)} \sigma^{(i)} \left( \VUvec{h}^{(i - 1)} \right) \) where \( \sigma^{(i)} \) is a differentiable monotonically increasing element-wise function. Let \( \delta \VUmat{W}^{(i)}_{\mathrm{BP}} \) and \( \delta \VUmat{W}^{(i)}_{\mathrm{TP}} \) be the update for the \( i \)-th layer from back-propagation and target propagation respectively. If \( \eta \) in equation \ref{targetprop_last_layer_target} is sufficiently small, then the angle \( \alpha \) between \( \delta \VUmat{W}^{(i)}_{\mathrm{BP}} \) and \( \delta \VUmat{W}^{(i)}_{\mathrm{TP}} \) is bounded by
+	\[ 0 < \frac{1 + \Delta_1 \left( \eta \right)}{\frac{\lambda_{\mathrm{max}}}{\lambda_{\mathrm{min}}} + \Delta_2 \left( \eta \right)} \leq \cos \left( \alpha \right) \leq 1 \]
+		where \( \lambda_{\mathrm{min}} \) and \( \lambda_{\mathrm{max}} \) are the smallest and largest singular values of \( \left( \VUmat{J}_{f^{(n)}} \dots \VUmat{J}_{f^{(i + 1)}} \right)^T \) where \( \VUmat{J}_{f^{(k)}} \) is the Jacobian matrix of \( f^{(k)} \) and \( \Delta_1 \left( \eta \right) \) and \( \Delta_2 \left( \eta \right) \) are close to \( 0 \) for sufficiently small \( \eta \).
 \end{theorem}
 
 \section{Difference target propagation}
@@ -51,17 +54,24 @@ An issue with vanilla target propagation is the fact that even when a layer has 
 A way to fulfil this restriction is to restrict the targets in the following way:
 \[ \widehat{\VUvec{h}}^{(i - 1)} - \VUvec{h}^{(i - 1)} = \widetilde{f}^{(i)} \left( \widehat{\VUvec{h}}^{(i)} \right) - \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right) \]
 This restriction gives the following formula for the layer target:
-\[ \widehat{\VUvec{h}}^{(i - 1)} = \widetilde{f}^{(i)} \left( \widehat{\VUvec{h}}^{(i)} \right) + \VUvec{h}^{(i - 1)} - \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right) \]
+\begin{equation}\label{difference_targetprop}
+	\widehat{\VUvec{h}}^{(i - 1)} = \widetilde{f}^{(i)} \left( \widehat{\VUvec{h}}^{(i)} \right) + \VUvec{h}^{(i - 1)} - \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right)
+\end{equation}
 This augmented definition of a target has the same computational benefits as vanilla target propagation -- only the target values have to be back-propagated, all other necessary values are layer-local or have already been computed in the forward pass of the network.
 
 \begin{remark}
 	If the approximate inverse function \( \widetilde{f}^{(i)} \) is substituted by the actual inverse function \( {f^{(i)}}^{-1} \), then
-	\[ \widehat{\VUvec{h}}_{DTP}^{(i - 1)} = {f^{(i)}}^{-1} \left( \widehat{\VUvec{h}}^{(i)} \right) + \VUvec{h}^{(i - 1)} - {f^{(i)}}^{-1} \left( \VUvec{h}^{(i)} \right) = \]
-	\[ = {f^{(i)}}^{-1} \left( \widehat{\VUvec{h}}^{(i)} \right) + \VUvec{h}^{(i - 1)} - \VUvec{h}^{(i - 1)} = {f^{(i)}}^{-1} \left( \widehat{\VUvec{h}}^{(i)} \right) = \widehat{\VUvec{h}}_{VTP}^{(i - 1)} \]
+	\[ \widehat{\VUvec{h}}_{\mathrm{DTP}}^{(i - 1)} = {f^{(i)}}^{-1} \left( \widehat{\VUvec{h}}^{(i)} \right) + \VUvec{h}^{(i - 1)} - {f^{(i)}}^{-1} \left( \VUvec{h}^{(i)} \right) = \]
+	\[ = {f^{(i)}}^{-1} \left( \widehat{\VUvec{h}}^{(i)} \right) + \VUvec{h}^{(i - 1)} - \VUvec{h}^{(i - 1)} = {f^{(i)}}^{-1} \left( \widehat{\VUvec{h}}^{(i)} \right) = \widehat{\VUvec{h}}_{\mathrm{VTP}}^{(i - 1)} \]
 	and Vanilla target propagation and Difference target propagation become equivalent.
 \end{remark}
 
 \cite{lee_difference_2015} state and prove the following theorem to show that difference target propagation satisfies the bound in equation \ref{targetprop_loss_bound}:
 
-\begin{theorem}\todo{Theorem 2 from source}
+\begin{theorem}
+	Let the target for layer \( i - 1 \) be given by the difference target propagation algorithm (i. e. equation \ref{difference_targetprop}). Let \( f^{(i)} \) and \( \widetilde{f}^{(i)} \) be differentiable and the corresponding matrices \( \VUmat{J}_{f^{(i)}} \) and \( \VUmat{J}_{\widetilde{f}^{(i)}} \) satisfy
+	\[ \rho \left( \left( \VUmat{I} - \VUmat{J}_{f^{(i)}} \VUmat{J}_{\widetilde{f}^{(i)}} \right)^T \left( \VUmat{I} - \VUmat{J}_{f^{(i)}} \VUmat{J}_{\widetilde{f}^{(i)}} \right) \right) < 1\]
+	where \( \rho \) denotes the spectral radius. If \( \widehat{\VUvec{h}}^{(i)} - \VUvec{h}^{(i)} \) is sufficiently small, then
+	\[ \left\lVert \widehat{\VUvec{h}}^{(i)} - f^{(i)} \left( \widehat{\VUvec{h}}^{(i - 1)} \right) \right\rVert^2_2 < \left\lVert \widetilde{\VUvec{h}}^{(i)} - \VUvec{h}^{(i)} \right\rVert^2_2 \]
 \end{theorem}
+The condition on the spectral radius is easily satisfied because \( \widetilde{f}^{(i)} \) learns the inverse of \( f^{(i)} \) and so the matrix in question is close to zero.

@@ -33,6 +33,49 @@
 	date = {2016-11-18}
 }
 
+@book{knuth_art_1968,
+	title = {The Art of Computer Programming},
+	isbn = {0-201-03801-3},
+	publisher = {Addison-Wesley},
+	author = {Knuth, Donald E.},
+	date = {1968},
+	langid = {english}
+}
+
+@article{amores_multiple_2013,
+	title = {Multiple instance classification: Review, taxonomy and comparative study},
+	volume = {201},
+	issn = {0004-3702},
+	url = {http://www.sciencedirect.com/science/article/pii/S0004370213000581},
+	doi = {10.1016/j.artint.2013.06.003},
+	shorttitle = {Multiple instance classification},
+	abstract = {Multiple Instance Learning ({MIL}) has become an important topic in the pattern recognition community, and many solutions to this problem have been proposed until now. Despite this fact, there is a lack of comparative studies that shed light into the characteristics and behavior of the different methods. In this work we provide such an analysis focused on the classification task (i.e., leaving out other learning tasks such as regression). In order to perform our study, we implemented fourteen methods grouped into three different families. We analyze the performance of the approaches across a variety of well-known databases, and we also study their behavior in synthetic scenarios in order to highlight their characteristics. As a result of this analysis, we conclude that methods that extract global bag-level information show a clearly superior performance in general. In this sense, the analysis permits us to understand why some types of methods are more successful than others, and it permits us to establish guidelines in the design of new {MIL} methods.},
+	pages = {81--105},
+	journaltitle = {Artificial Intelligence},
+	shortjournal = {Artificial Intelligence},
+	author = {Amores, Jaume},
+	urldate = {2017-05-31},
+	date = {2013-08},
+	keywords = {Bag-of-Words, Codebook, Multi-instance learning}
+}
+
+@article{dietterich_solving_1997,
+	title = {Solving the multiple instance problem with axis-parallel rectangles},
+	volume = {89},
+	issn = {0004-3702},
+	url = {http://www.sciencedirect.com/science/article/pii/S0004370296000343},
+	doi = {10.1016/S0004-3702(96)00034-3},
+	abstract = {The multiple instance problem arises in tasks where the training examples are ambiguous: a single example object may have many alternative feature vectors (instances) that describe it, and yet only one of those feature vectors may be responsible for the observed classification of the object. This paper describes and compares three kinds of algorithms that learn axis-parallel rectangles to solve the multiple instance problem. Algorithms that ignore the multiple instance problem perform very poorly. An algorithm that directly confronts the multiple instance problem (by attempting to identify which feature vectors are responsible for the observed classifications) performs best, giving 89\% correct predictions on a musk odor prediction task. The paper also illustrates the use of artificial data to debug and compare these algorithms.},
+	pages = {31--71},
+	number = {1},
+	journaltitle = {Artificial Intelligence},
+	shortjournal = {Artificial Intelligence},
+	author = {Dietterich, Thomas G. and Lathrop, Richard H. and Lozano-Pérez, Tomás},
+	urldate = {2017-05-31},
+	date = {1997-01-01},
+	keywords = {Drug design, Machine learning, Structure-activity relationships}
+}
+
 @article{kingma_adam:_2014,
 	title = {Adam: A Method for Stochastic Optimization},
 	url = {http://arxiv.org/abs/1412.6980},
@@ -88,7 +131,7 @@
 
 @incollection{lecun_learning_1986,
 	title = {Learning Process in an Asymmetric Threshold Network},
-	isbn = {978-3-642-82659-7 978-3-642-82657-3},
+	isbn = {978-3-642-82657-3},
 	url = {https://link.springer.com/chapter/10.1007/978-3-642-82657-3_24},
 	series = {{NATO} {ASI} Series},
 	abstract = {Threshold functions and related operators are widely used as basic elements of adaptive and associative networks [Nakano 72, Amari 72, Hopfield 82]. There exist numerous learning rules for finding a set of weights to achieve a particular correspondence between input-output pairs. But early works in the field have shown that the number of threshold functions (or linearly separable functions) in N binary variables is small compared to the number of all possible boolean mappings in N variables, especially if N is large. This problem is one of the main limitations of most neural networks models where the state is fully specified by the environment during learning: they can only learn linearly separable functions of their inputs. Moreover, a learning procedure which requires the outside world to specify the state of every neuron during the learning session can hardly be considered as a general learning rule because in real-world conditions, only a partial information on the “ideal” network state for each task is available from the environment. It is possible to use a set of so-called “hidden units” [Hinton,Sejnowski,Ackley. 84], without direct interaction with the environment, which can compute intermediate predicates. Unfortunately, the global response depends on the output of a particular hidden unit in a highly non-linear way, moreover the nature of this dependence is influenced by the states of the other cells.},
@@ -139,7 +182,7 @@
 
 @inproceedings{lee_difference_2015,
 	title = {Difference Target Propagation},
-	isbn = {978-3-319-23527-1 978-3-319-23528-8},
+	isbn = {978-3-319-23528-8},
 	url = {https://link.springer.com/chapter/10.1007/978-3-319-23528-8_31},
 	doi = {10.1007/978-3-319-23528-8_31},
 	series = {Lecture Notes in Computer Science},
@@ -169,4 +212,57 @@
 	urldate = {2018-05-03},
 	date = {1988-09-01},
 	langid = {english}
+}
+
+@thesis{dedic_hierarchicke_2017,
+	location = {Prague},
+	title = {Hierarchické modely síťového provozu},
+	abstract = {The current approach to the detection of unwanted software by monitoring client traffic uses
+handwritten features as part of the model. This approach has several disadvantages. This thesis proposes
+a fully automated classifier which recognises malware activity at network connection level. The multi-
+instance learning approach was used in order to achieve this. As a part of this thesis the multi-instance
+learning was theoretically defined using two different formalisms and current work in this field was sum-
+marised. Subsequently, there was described the hierarchical structure of an {URL} address which was used
+as an input for the classifier. A model reflecting this inherent hierarchical structure was proposed and
+an explanation of how multi-instance learning was utilised and modified was presented together with the
+description of the implementation of the model using neural networks. Methods of classifier quality as-
+sessment were outlined. The classifier presented here was compared with prior art and the influence of
+model parameters on its quality was assessed.},
+	pagetotal = {41},
+	institution = {Czech Technical University in Prague},
+	type = {Bachelor thesis},
+	author = {Dědič, Marek},
+	date = {2017-07-07}
+}
+
+@article{zhang_multi-instance_2009,
+	title = {Multi-instance clustering with applications to multi-instance prediction},
+	volume = {31},
+	issn = {0924-669X, 1573-7497},
+	url = {https://link.springer.com/article/10.1007/s10489-007-0111-x},
+	doi = {10.1007/s10489-007-0111-x},
+	abstract = {In the setting of multi-instance learning, each object is represented by a bag composed of multiple instances instead of by a single instance in a traditional learning setting. Previous works in this area only concern multi-instance prediction problems where each bag is associated with a binary (classification) or real-valued (regression) label. However, unsupervised multi-instance learning where bags are without labels has not been studied. In this paper, the problem of unsupervised multi-instance learning is addressed where a multi-instance clustering algorithm named Bamic is proposed. Briefly, by regarding bags as atomic data items and using some form of distance metric to measure distances between bags, Bamic adapts the popular k -Medoids algorithm to partition the unlabeled training bags into k disjoint groups of bags. Furthermore, based on the clustering results, a novel multi-instance prediction algorithm named Bartmip is developed. Firstly, each bag is re-represented by a k-dimensional feature vector, where the value of the i-th feature is set to be the distance between the bag and the medoid of the i-th group. After that, bags are transformed into feature vectors so that common supervised learners are used to learn from the transformed feature vectors each associated with the original bag’s label. Extensive experiments show that Bamic could effectively discover the underlying structure of the data set and Bartmip works quite well on various kinds of multi-instance prediction problems.},
+	pages = {47--68},
+	number = {1},
+	journaltitle = {Applied Intelligence},
+	shortjournal = {Appl Intell},
+	author = {Zhang, Min-Ling and Zhou, Zhi-Hua},
+	urldate = {2018-05-14},
+	date = {2009-08-01},
+	langid = {english}
+}
+
+@inproceedings{chen_contextual_2012,
+	location = {Sichuan, China},
+	title = {Contextual Hausdorff dissimilarity for multi-instance clustering},
+	isbn = {978-1-4673-0024-7},
+	url = {https://ieeexplore.ieee.org/abstract/document/6233889/},
+	doi = {10.1109/FSKD.2012.6233889},
+	eventtitle = {2012 9th International Conference on Fuzzy Systems and Knowledge Discovery},
+	pages = {870--873},
+	booktitle = {Fuzzy Systems and Knowledge Discovery ({FSKD})},
+	publisher = {{IEEE} Computer Society Press},
+	author = {Chen, Ying and Wu, Ou},
+	urldate = {2018-05-14},
+	date = {2012-05}
 }

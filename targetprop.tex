@@ -10,7 +10,7 @@ Using notation from section \ref{backprop_application}, the principle of target 
 \begin{equation}\label{targetprop_loss_bound}
 	L \left( \widehat{\VUvec{y}}, \VUvec{y} \right) = L \left( f^{(n)} \circ \dots \circ f^{(i + 1)} \left( \VUvec{h}^{(i)} \right), \VUvec{y} \right) > L \left( f^{(n)} \circ \dots \circ f^{(i + 1)} \left( \widehat{\VUvec{h}}^{(i)} \right), \VUvec{y} \right)
 \end{equation}
-With such a target a \VUname{layer-local loss function} may be defined as \( L_i = L \left( \widehat{\VUvec{h}}^{(i)}, \VUvec{h}^{(i)} \right) \). This loss value can in turn be used to compute the gradients for the parameters of the layer as
+With such a target, a \VUname{layer-local loss function} may be defined as \( L_i = L \left( \widehat{\VUvec{h}}^{(i)}, \VUvec{h}^{(i)} \right) \). This loss value can in turn be used to compute the gradients for the parameters of the layer as
 \[ \nabla_{\VUvec{a}^{(i)}} J = \nabla_{\VUvec{h}^{(i)}} L \left( \widehat{\VUvec{h}}^{(i)}, \VUvec{h}^{(i)} \right) \odot {\sigma^{(i)}}' \left( \VUvec{a}^{(i)} \right)  = \nabla_{\VUvec{h}^{(i)}} L_i \odot {\sigma^{(i)}}' \left( \VUvec{a}^{(i)} \right) \]
 \[ \nabla_{\VUmat{W}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J {\VUvec{h}^{(i - 1)}}^T \]
 \[ \nabla_{\VUvec{b}^{(i)}} J = \nabla_{\VUvec{a}^{(i)}} J \]
@@ -22,7 +22,7 @@ The open question remaining is how to choose the targets for the layers. For the
 \end{equation}
 where \( \eta \) is the step size of the learning algorithm. This is the same result as in back-propagation.
 
-If all the necessary functions were invertible, a trivial choice of the target for lower levels of the network would be the inverse image of the desired output \( \VUvec{y} \). Then the layer-local loss function value would be \( L_i = L \left( \widehat{\VUvec{h}}^{(i)}, \widehat{\VUvec{h}}^{(i)} \right) = 0 \). This trivial choice is however practically unfeasible -- the functions in question may not be invertible (e. g. when a ReLU activation function is used). Moreover, such targets may actually not be in the domains of the layer functions \( f^{(i)} \). To circumvent these issues, two variations of target propagation have been proposed. (\cite{bengio_how_2014} and \cite{lee_difference_2015})
+If all the necessary functions were invertible, a trivial choice of the target for lower levels of the network would be the inverse image of the desired output \( \VUvec{y} \). Then the layer-local loss function value would be \( L_i = L \left( \widehat{\VUvec{h}}^{(i)}, \widehat{\VUvec{h}}^{(i)} \right) = 0 \). This trivial choice is, however, practically unfeasible -- the functions in question may not be invertible (e. g. when a ReLU activation function is used). Moreover, such targets may actually not be in the domains of the layer functions \( f^{(i)} \). To circumvent these issues, two variations of target propagation have been proposed. (\cite{bengio_how_2014} and \cite{lee_difference_2015})
 
 \section{Vanilla target propagation}
 
@@ -57,7 +57,7 @@ This restriction gives the following formula for the layer target:
 \begin{equation}\label{difference_targetprop}
 	\widehat{\VUvec{h}}^{(i - 1)} = \widetilde{f}^{(i)} \left( \widehat{\VUvec{h}}^{(i)} \right) + \VUvec{h}^{(i - 1)} - \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right)
 \end{equation}
-This augmented definition of a target has the same computational benefits as vanilla target propagation -- only the target values have to be back-propagated, all other necessary values are layer-local or have already been computed in the forward pass of the network.
+This augmented definition of a target has the same computational benefits as vanilla target propagation -- only the target values have to be back-propagated. All other necessary values are layer-local or have already been computed in the forward pass of the network.
 
 \begin{remark}
 	If the approximate inverse function \( \widetilde{f}^{(i)} \) is substituted by the actual inverse function \( {f^{(i)}}^{-1} \), then

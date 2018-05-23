@@ -37,9 +37,44 @@ The previous definition allows for a generalization of the concept of a power se
 \begin{remark}
 	A power set of \( \VUset{A} \) may be seen as a set of all function from \( \VUset{A} \) to \( \left\{ 0, 1 \right\} \), sometimes written as \( \left\{ 0, 1 \right\}^{\VUset{A}} \). \( \left\{ 0, 1 \right\} \) coincides with the von Neumann ordinal 2, therefore the power set is often denoted \( 2^{\VUset{A}} \). Similarly, the power multiset may be seen as a set of all functions from \( \VUset{A} \) to \( \VUfield{N} \) ( where \( 0 \in \VUfield{N} \)). It is therefore possible to use an analogous notation \( \mathcal{P}^M \left( \VUset{A} \right) = \VUfield{N}^\VUset{A} \). This analogy extends to the size of the sets in question where
 	\[ \left\lvert 2^{\VUset{A}} \right\rvert = 2^{\left\lvert \VUset{A} \right\rvert} \qquad \text{and} \qquad \left\lvert \VUfield{N}^\VUset{A} \right\rvert = + \infty \]
+	for all \( \VUset{A} \neq \emptyset \).
 \end{remark}
 
 \begin{define}
 	Let \( \VUset{B} = \left( \VUset{A}, m \right) \) be a multiset where \( \VUset{A} \) is finite. The cardinality of the multiset \( \VUset{B} \) is
 	\[ \left\lvert \VUset{B} \right\rvert = \sum_{a \in \VUset{A}} m \left( a \right) \]
 \end{define}
+
+\section{Multi-instance learning}
+Multi-instance learning (see \cite{dietterich_solving_1997}) is an approach to solving problems where there is an input space \( \VUspace{X} \) and an output space \( \VUspace{Y} \) (whose elements are often called labels or classes) and the goal is to find a mapping of input objects to output objects. Unlike classical supervised learning, there is no known solution consisting of pairs of input and output objects. Instead, the input objects are grouped together into so called bags, which are defined as follows:
+
+\begin{define}
+	Let \( \VUspace{X} \) be a set of input objects. Then the \VUname{bag space} is a multiset \( \VUspace{B} \) with the properties
+	\begin{enumerate}
+		\item \( \VUspace{B} \subset \mathcal{P}^M \left( \VUspace{X} \right) \)
+		\item \( \left( \forall x \in \VUspace{X} \right) \left( \exists b \in \VUspace{B} \right) \left( x \in b \right) \)
+	\end{enumerate}
+	Elements of the bag space are called \VUname{bags}.
+\end{define}
+
+Multi-instance learning uses a dataset consisting of pairs of bags and labels to learn a mapping between them. \cite{dietterich_solving_1997} provides the following example of a multi-instance problem:
+
+\begin{example}
+	Suppose there is a keyed lock on the door to the supply room in an office. Each staff member has a key chain containing several keys. One key on each key chain can open the supply room door. For some staff members, their supply room key opens only the supply room door; while for other staff members, their supply room key may open one or more other doors (e.g., their office door, the mail room door, the conference room door). 
+
+	Suppose you are a lock smith and you are attempting to infer the most general required shape that a key must have in order to open the supply room door. If you knew this required shape, you could predict, by examining any key, whether that key could unlock the door. What makes your lock smith job difficult is that the staff members are uncooperative. Instead of showing you which key on their key chains opens the supply room door, they just hand you their entire key chain and ask you to figure it out for yourself! Furthermore, you are not given access to the supply room door, so you can’t try out the individual keys. Instead, you must examine the shapes of all of the keys on the key rings and infer the answer. 
+\end{example}
+
+In this example, the keys (or, more precisely their description by a feature vector) are the input objects from \( \VUspace{X} \). The key chains are bags. Even though it makes sense to ask for each key whether it unlocks the supply room, this information is not provided. Instead only a key-chain-level information is available. On the other hand, it may be stated that a key chain opens the supply room door if and only if it contains a key which opens the door. This naturally leads to the following definition:
+
+\begin{define}
+	Let \( \VUspace{X} \) be an input space and \( \VUspace{Y} \) a label space such that
+	\[ \left( \forall x \in \VUspace{X} \right) \left( \exists_1 y_x \in \VUspace{Y} \right) \]
+	Let \( \VUspace{B} \) be a bag space. Let maximum be well-defined in \( \VUspace{Y} \). Then the label of the bag \( b \in \VUspace{B} \) is
+	\[ y_b = \max_{x \in b} \left( y_x \right) \in \VUspace{Y} \]
+\end{define}
+
+As will later be shown in section \todo{Section}, this isn't the only interpretation of multi-instance learning. There are multiple problems \todo{cite} where the instance-level labels are not only no known, but even not well-defined as the bag isn't seen as a mere collection of objects but as a distinct object of its own.
+
+\section{Approaches to solving multi-instance problems}
+In this section, there are described the three major approaches to solving multi-instance problems. The section is sourced primarily from \cite{pevny_using_2016}, \cite{pevny_discriminative_2016} and \cite{amores_multiple_2013}. \todo{Amores?}

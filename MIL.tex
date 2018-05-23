@@ -60,14 +60,14 @@ Multi-instance learning (see \cite{dietterich_solving_1997}) is an approach to s
 Multi-instance learning uses a dataset consisting of pairs of bags and labels to learn a mapping between them. \cite{dietterich_solving_1997} provides the following example of a multi-instance problem:
 
 \begin{example}
-	Suppose there is a keyed lock on the door to the supply room in an office. Each staff member has a key chain containing several keys. One key on each key chain can open the supply room door. For some staff members, their supply room key opens only the supply room door; while for other staff members, their supply room key may open one or more other doors (e.g., their office door, the mail room door, the conference room door). 
+	Suppose there is a keyed lock on the door to the supply room in an office. Each staff member has a key chain containing several keys. One key on each key chain can open the supply room door. For some staff members, their supply room key opens only the supply room door; while for other staff members, their supply room key may open one or more other doors (e.g., their office door, the mail room door, the conference room door).
 
-	Suppose you are a lock smith and you are attempting to infer the most general required shape that a key must have in order to open the supply room door. If you knew this required shape, you could predict, by examining any key, whether that key could unlock the door. What makes your lock smith job difficult is that the staff members are uncooperative. Instead of showing you which key on their key chains opens the supply room door, they just hand you their entire key chain and ask you to figure it out for yourself! Furthermore, you are not given access to the supply room door, so you can’t try out the individual keys. Instead, you must examine the shapes of all of the keys on the key rings and infer the answer. 
+	Suppose you are a lock smith and you are attempting to infer the most general required shape that a key must have in order to open the supply room door. If you knew this required shape, you could predict, by examining any key, whether that key could unlock the door. What makes your lock smith job difficult is that the staff members are uncooperative. Instead of showing you which key on their key chains opens the supply room door, they just hand you their entire key chain and ask you to figure it out for yourself! Furthermore, you are not given access to the supply room door, so you can’t try out the individual keys. Instead, you must examine the shapes of all of the keys on the key rings and infer the answer.
 \end{example}
 
 In this example, the keys (or, more precisely their description by a feature vector) are the input objects from \( \VUspace{X} \). The key chains are bags. Even though it makes sense to ask for each key whether it unlocks the supply room, this information is not provided. Instead only a key-chain-level information is available. On the other hand, it may be stated that a key chain opens the supply room door if and only if it contains a key which opens the door. This naturally leads to the following definition:
 
-\begin{define}
+\begin{define}\label{baglabel}
 	Let \( \VUspace{X} \) be an input space and \( \VUspace{Y} \) a label space such that
 	\[ \left( \forall x \in \VUspace{X} \right) \left( \exists_1 y_x \in \VUspace{Y} \right) \]
 	Let \( \VUspace{B} \) be a bag space. Let maximum be well-defined in \( \VUspace{Y} \). Then the label of the bag \( b \in \VUspace{B} \) is
@@ -78,3 +78,39 @@ As will later be shown in section \todo{Section}, this isn't the only interpreta
 
 \section{Approaches to solving multi-instance problems}
 In this section, there are described the three major approaches to solving multi-instance problems. The section is sourced primarily from \cite{pevny_using_2017}, \cite{pevny_discriminative_2016} and \cite{amores_multiple_2013}. \todo{Amores?}
+
+\subsection{Instance-space paradigm}
+Instance-space paradigm is the original approach proposed by \cite{dietterich_solving_1997}. The existence of labels for all instances is presumed, even though such labels aren't known. The goal of this approach is to find the instance-level labelling \( f : \VUspace{X} \to \VUspace{Y} \) and use it to model the bag-level label analogically to definition \ref{baglabel}, that is
+\[ y_b = \max_{x \in \VUspace{X} } \left( f \left( x \right) \right) \]
+
+There are many applications of instance-space paradigm, the most important of which are described next. (Also see \cite{andrews_support_2003} \cite{zhang_multiple_2006})
+
+\VUname{BP-MIP}, proposed by \cite{zhou_neural_2002}, is an application of multi-instance learning to binary classification, i. e. \( \VUspace{Y} = \left\{ -1, +1 \right\} \). A feedforward neural network is used, its output for the \( j \)-th instance of the \( i \)-th bag denoted \( o_{ij} \). An instance-level error function is defined as
+\[ E_{ij} = \begin{cases}
+		0 &\text{for} \quad y_{b_i} = -1 \wedge o_{ij} < 0.5 \\
+		0 &\text{for} \quad y_{b_i} = +1 \wedge o_{ij} \geq 0.5 \\
+		\frac{1}{2} \left( o_{ij} - 0.5 \right)^2 &\text{otherwise}
+	\end{cases} \]
+This instance-level error function is then used to define a bag-level error function as \footnote{The original article erroneously states the upper bound as \( \left\lvert b_j \right\rvert \)}
+\[ E_i = \begin{cases}
+		\max_{1 \leq j \leq \left\lvert b_i \right\rvert} E_{ij} &\text{for} \quad y_{b_i} = -1 \\
+		\min_{1 \leq j \leq \left\lvert b_i \right\rvert} E_{ij} &\text{for} \quad y_{b_i} = +1
+	\end{cases} \]
+And this is in turn used to define the global loss function
+\[ E = \sum_{i = 1}^{\left\lvert \VUspace{B} \right\rvert} E_i \]
+With such a well-defined global loss function, the back-propagation algorithm can be used with a slight modification described in the original article.
+
+\VUname{EM-DD}, proposed by \cite{zhang_em-dd:_2002}, combines the \VUname{expectation-maximization} algorithm (see \cite{dempster_maximum_1977}) with the \VUname{diverse density} algorithm (see \cite{maron_framework_1998}). The EM-DD algorithm starts with a target hypothesis \( h \in \VUspace{Y} \), which is then refined with the EM algorithm. In the E-step, the instance thought to be most responsible for the label of each bag is picked. In the M-step, the gradient ascent algorithm is used to find a new hypothesis \( h' \) which maximizes \( \mathrm{DD} \left( h \right) \). \( \mathrm{DD} \left( h \right) \) corresponds to the likelihood that \( h \) is the actual target. These steps are then repeated, refining the hypothesis.
+
+\subsection{Bag-space paradigm}
+The bag-space paradigm is a formalism in which the notion of instance-level labels is abandoned and only bag-level labels are assumed to exist. The definition \ref{baglabel} is no longer used, so some other way of working with bags must be devised. In order to do this, a bag distance function or a bag kernel function is defined, having the form
+\[ k : \VUspace{B} \times \VUspace{B} \to \VUfield{R}_0^+ \]
+Because the notion of an instance-level label is no longer used, the sought classification function is of the form \( f : \VUspace{B} \to \VUspace{Y} \).
+
+\VUname{Citation-kNN}, proposed by \cite{wang_solving_2000}, defines a modified Hausdorff distance for bags \( b_1, b_2 \in \VUspace{B} \) as
+\[ H \left( b_1, b_2 \right) = \min_{x \in b_1} \min_{y \in b_2} \left\lVert x - y \right\rVert \]
+The \( k \)-nearest neighbour algorithm (see \cite{dasarathy_nearest_1991}) is modified for this application by adding a system of \VUname{citations} and \VUname{references}. The \( r \)-nearest references are the nearest neighbours from the vanilla kNN algorithm and the \( c \)-nearest citers are defined as
+\[ \mathrm{Citers} \left( x, c \right) = \left\{ x_i \middle| \mathrm{Rank} \left( x_i, x \right) \leq c \wedge x_i \in b \right\} \]
+For each bag, the \( r \)-nearest references and the \( c \)-nearest citers are found using the modified Hausdorff distance. If among those there are more positive bags then there are negative ones, the bag is labelled as positive. Otherwise the bag is labelled as negative.
+
+For more applications using the bag-space paradigm, see \cite{wang_solving_2000}, \cite{kwok_marginalized_2007}, \cite{gartner_multi-instance_2002}, \cite{haussler_convolution_1999}, \cite{zhou_multi-instance_2009} and \cite{muandet_learning_2012}.

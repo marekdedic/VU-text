@@ -74,10 +74,10 @@ In this example, the keys (or, more precisely their description by a feature vec
 	\[ y_b = \max_{x \in b} \left( y_x \right) \in \VUspace{Y} \]
 \end{define}
 
-As will later be shown in section \todo{Section}, this isn't the only interpretation of multi-instance learning. There are multiple problems \todo{cite} where the instance-level labels are not only no known, but even not well-defined as the bag isn't seen as a mere collection of objects but as a distinct object of its own.
+As will later be shown in sections \ref{bag-space-paradigm} and \ref{embedded-space-paradigm}, this isn't the only interpretation of multi-instance learning. There are problems where the instance-level labels are not only no known, but even not well-defined as the bag isn't seen as a mere collection of objects but as a distinct object of its own.
 
 \section{Approaches to solving multi-instance problems}
-In this section, there are described the three major approaches to solving multi-instance problems. The section is sourced primarily from \cite{pevny_using_2017}, \cite{pevny_discriminative_2016} and \cite{amores_multiple_2013}. \todo{Amores?}
+In this section, there are described the three major approaches to solving multi-instance problems. The section is sourced primarily from \cite{pevny_using_2017} and \cite{pevny_discriminative_2016}.
 
 \subsection{Instance-space paradigm}
 Instance-space paradigm is the original approach proposed by \cite{dietterich_solving_1997}. The existence of labels for all instances is presumed, even though such labels aren't known. The goal of this approach is to find the instance-level labelling \( f : \VUspace{X} \to \VUspace{Y} \) and use it to model the bag-level label analogically to definition \ref{baglabel}, that is
@@ -102,7 +102,7 @@ With such a well-defined global loss function, the back-propagation algorithm ca
 
 \VUname{EM-DD}, proposed by \cite{zhang_em-dd:_2002}, combines the \VUname{expectation-maximization} algorithm (see \cite{dempster_maximum_1977}) with the \VUname{diverse density} algorithm (see \cite{maron_framework_1998}). The EM-DD algorithm starts with a target hypothesis \( h \in \VUspace{Y} \), which is then refined with the EM algorithm. In the E-step, the instance thought to be most responsible for the label of each bag is picked. In the M-step, the gradient ascent algorithm is used to find a new hypothesis \( h' \) which maximizes \( \mathrm{DD} \left( h \right) \). \( \mathrm{DD} \left( h \right) \) corresponds to the likelihood that \( h \) is the actual target. These steps are then repeated, refining the hypothesis.
 
-\subsection{Bag-space paradigm}
+\subsection{Bag-space paradigm}\label{bag-space-paradigm}
 The bag-space paradigm is a formalism in which the notion of instance-level labels is abandoned and only bag-level labels are assumed to exist. The definition \ref{baglabel} is no longer used, so some other way of working with bags must be devised. In order to do this, a bag distance function or a bag kernel function is defined, having the form
 \[ k : \VUspace{B} \times \VUspace{B} \to \VUfield{R}_0^+ \]
 Because the notion of an instance-level label is no longer used, the sought classification function is of the form \( f : \VUspace{B} \to \VUspace{Y} \).
@@ -114,3 +114,21 @@ The \( k \)-nearest neighbour algorithm (see \cite{dasarathy_nearest_1991}) is m
 For each bag, the \( r \)-nearest references and the \( c \)-nearest citers are found using the modified Hausdorff distance. If among those there are more positive bags then there are negative ones, the bag is labelled as positive. Otherwise the bag is labelled as negative.
 
 For more applications using the bag-space paradigm, see \cite{wang_solving_2000}, \cite{kwok_marginalized_2007}, \cite{gartner_multi-instance_2002}, \cite{haussler_convolution_1999}, \cite{zhou_multi-instance_2009} and \cite{muandet_learning_2012}.
+
+\subsection{Embedded-space paradigm}\label{embedded-space-paradigm}
+In the embedded space paradigm, labels are only defined on the level of bags, same as in the bag-space paradigm. In order for these bag labels to be learned, an embedding function of the form \( \phi : \VUspace{B} \to \bar{\VUspace{X}} \) must be defined, where \( \bar{\VUspace{X}} \) is a new input space, which may or may not be identical to \( \VUspace{X} \). Using this function, each bag can be represented by an input object \( \phi \left( b \right) \in \bar{\VUspace{X}} \), which makes it possible to use any off-the-shelf supervised learning algorithm. Amongst the simplest embedding functions are e. g. element-wise minimum, maximum and mean. A more complicated embedding function may for example apply a neural network to each instance of the bag and subsequently pool the instances using one of the aforementioned functions.
+
+\VUname{MILES}, proposed by \cite{chen_miles:_2006}, uses an instance dictionary \( \VUspace{D} \) to define an embedding function representing the degree of similarity between the bag and the dictionary, that is
+\[ \phi : \VUspace{B} \to \VUfield{R}^{\left\lvert \VUspace{D} \right\rvert} \]
+which is defined element-wise as
+\[ \phi_i \left( b \right) = \sum_{x \in b} k \left( x, d_i \right) \quad \text{where} \quad d_i \in \VUspace{D} \]
+where
+\[ k \left( x, d \right) = \begin{cases}
+		e^{- \frac{1}{\sigma^2} \left\lVert x - d \right\rVert^2} &\text{if } d \text{ is the nearest neighbour of } x \text{ in } \VUspace{D} \\
+		0 &\text{otherwise}
+	\end{cases} \]
+The dictionary is populated by a 1-class support vector machine (see \cite{zhu_1-norm_2004}), which, however, has a high computational complexity.
+
+For more applications using the embedded-space paradigm, see \cite{cheplygina_multiple_2015}, \cite{chen_image_2004} \cite{foulds_learning_2008}, \cite{zhang_multi-instance_2009} and \cite{dedic_hierarchicke_2017}.
+
+\todo{Stochastic and information-theoretical formalisms?}

@@ -10,6 +10,37 @@
 	keywords = {Combinatorial Pattern Matching, {CPM}, Yandex, Яндекс}
 }
 
+@article{chen_miles:_2006,
+	title = {{MILES}: Multiple-Instance Learning via Embedded Instance Selection},
+	volume = {28},
+	issn = {0162-8828},
+	doi = {10.1109/TPAMI.2006.248},
+	shorttitle = {{MILES}},
+	abstract = {Multiple-instance problems arise from the situations where training class labels are attached to sets of samples (named bags), instead of individual samples within each bag (called instances). Most previous multiple-instance learning ({MIL}) algorithms are developed based on the assumption that a bag is positive if and only if at least one of its instances is positive. Although the assumption works well in a drug activity prediction problem, it is rather restrictive for other applications, especially those in the computer vision area. We propose a learning method, {MILES} (multiple-instance learning via embedded instance selection), which converts the multiple-instance learning problem to a standard supervised learning problem that does not impose the assumption relating instance labels to bag labels. {MILES} maps each bag into a feature space defined by the instances in the training bags via an instance similarity measure. This feature mapping often provides a large number of redundant or irrelevant features. Hence, 1-norm {SVM} is applied to select important features as well as construct classifiers simultaneously. We have performed extensive experiments. In comparison with other methods, {MILES} demonstrates competitive classification accuracy, high computation efficiency, and robustness to labeling uncertainty},
+	pages = {1931--1947},
+	number = {12},
+	journaltitle = {{IEEE} Transactions on Pattern Analysis and Machine Intelligence},
+	author = {Chen, Yixin and Bi, Jinbo and Wang, J. Z.},
+	date = {2006-12},
+	keywords = {1-norm support vector machine, Algorithms, Application software, Artificial Intelligence, classification accuracy, computer vision, drug activity prediction, drug activity prediction., Drugs, embedded instance selection, feature extraction, feature mapping, feature subset selection, image categorization, Image Enhancement, Image Interpretation, Computer-Assisted, Imaging, Three-Dimensional, Information Storage and Retrieval, Labeling, labeling uncertainty, learning (artificial intelligence), Learning systems, {MILES}, Multiple-instance learning, multiple-instance learning algorithms, object recognition, pattern classification, Reproducibility of Results, Robustness, Sensitivity and Specificity, supervised learning, support vector machine, Support vector machine classification, support vector machines, Uncertainty}
+}
+
+@thesis{foulds_learning_2008,
+	title = {Learning Instance Weights in Multi-Instance Learning},
+	url = {http://researchcommons.waikato.ac.nz/handle/10289/2460},
+	abstract = {Multi-instance ({MI}) learning is a variant of supervised machine learning, where each learning example contains a bag of instances instead of just a single feature vector. {MI} learning has applications in areas such as drug activity prediction, fruit disease management and image classification.
+
+This thesis investigates the case where each instance has a weight value determining the level of influence that it has on its bag's class label. This is a more general assumption than most existing approaches use, and thus is more widely applicable. The challenge is to accurately estimate these weights in order to make predictions at the bag level.
+
+An existing approach known as {MILES} is retroactively identified as an algorithm that uses instance weights for {MI} learning, and is evaluated using a variety of base learners on benchmark problems. New algorithms for learning instance weights for {MI} learning are also proposed and rigorously evaluated on both artificial and real-world datasets. The new algorithms are shown to achieve better root mean squared error rates than existing approaches on artificial data generated according to the algorithms' underlying assumptions. Experimental results also demonstrate that the new algorithms are competitive with existing approaches on real-world problems.},
+	institution = {The University of Waikato},
+	type = {Thesis},
+	author = {Foulds, James Richard},
+	urldate = {2017-07-06},
+	date = {2008},
+	langid = {english}
+}
+
 @article{dempster_maximum_1977,
 	title = {Maximum Likelihood from Incomplete Data via the {EM} Algorithm},
 	volume = {39},
@@ -66,6 +97,19 @@
 	date = {2009}
 }
 
+@article{chen_image_2004,
+	title = {Image Categorization by Learning and Reasoning with Regions},
+	volume = {5},
+	issn = {{ISSN} 1533-7928},
+	url = {http://www.jmlr.org/papers/v5/chen04a.html},
+	pages = {913--939},
+	issue = {Aug},
+	journaltitle = {Journal of Machine Learning Research},
+	author = {Chen, Yixin and Wang, James Z.},
+	urldate = {2017-07-06},
+	date = {2004}
+}
+
 @article{cauchy_methode_1847,
 	title = {Méthode générale pour la résolution des systemes d’équations simultanées},
 	volume = {25},
@@ -76,6 +120,23 @@
 	author = {Cauchy, Augustin},
 	urldate = {2017-07-04},
 	date = {1847}
+}
+
+@article{cheplygina_multiple_2015,
+	title = {Multiple instance learning with bag dissimilarities},
+	volume = {48},
+	issn = {0031-3203},
+	url = {http://www.sciencedirect.com/science/article/pii/S0031320314002817},
+	doi = {10.1016/j.patcog.2014.07.022},
+	abstract = {Multiple instance learning ({MIL}) is concerned with learning from sets (bags) of objects (instances), where the individual instance labels are ambiguous. In this setting, supervised learning cannot be applied directly. Often, specialized {MIL} methods learn by making additional assumptions about the relationship of the bag labels and instance labels. Such assumptions may fit a particular dataset, but do not generalize to the whole range of {MIL} problems. Other {MIL} methods shift the focus of assumptions from the labels to the overall (dis)similarity of bags, and therefore learn from bags directly. We propose to represent each bag by a vector of its dissimilarities to other bags in the training set, and treat these dissimilarities as a feature representation. We show several alternatives to define a dissimilarity between bags and discuss which definitions are more suitable for particular {MIL} problems. The experimental results show that the proposed approach is computationally inexpensive, yet very competitive with state-of-the-art algorithms on a wide range of {MIL} datasets.},
+	pages = {264--275},
+	number = {1},
+	journaltitle = {Pattern Recognition},
+	shortjournal = {Pattern Recognition},
+	author = {Cheplygina, Veronika and Tax, David M. J. and Loog, Marco},
+	urldate = {2017-07-04},
+	date = {2015-01-01},
+	keywords = {Dissimilarity representation, drug activity prediction, Image classification, Multiple instance learning, Point set distance, Text categorization}
 }
 
 @report{haussler_convolution_1999,
@@ -138,6 +199,16 @@
 	publisher = {The {MIT} Press},
 	author = {Goodfellow, Ian and Bengio, Yoshua and Courville, Aaron},
 	date = {2016-11-18}
+}
+
+@inproceedings{zhu_1-norm_2004,
+	title = {1-norm support vector machines},
+	url = {http://papers.nips.cc/paper/2450-1-norm-support-vector-machines.pdf},
+	pages = {49--56},
+	booktitle = {Advances in neural information processing systems},
+	author = {Zhu, Ji and Rosset, Saharon and Tibshirani, Robert and Hastie, Trevor J.},
+	urldate = {2017-07-01},
+	date = {2004}
 }
 
 @book{dasarathy_nearest_1991,

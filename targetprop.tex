@@ -1,6 +1,6 @@
 \chapter{Target Propagation}\label{targetprop}
 
-\VUname{Target propagation} (sometimes abbreviated to targetprop) is an alternative approach to computing the gradients of a deep feedforward neural network. The idea dates back to \cite{lecun_learning_1986}, but has recently gained more interest (\cite{bengio_how_2014}, \cite{bengio_towards_2015}, \cite{lee_difference_2015}). Unlike the back-propagation algorithm, the target propagation algorithm is only defined for optimization in feedforward neural networks used in classification problems. For a high-level overview, the back-propagation algorithm can be summarized as follows: The error of the network is computed at the end of the network (after the loss function) and then back-propagated through the network to each layer, where it is used to update the layer parameters. The target propagation algorithm can be viewed as operating conversely: The desired output of the network is back-propagated through the network, creating a \VUname{target} for each layer. Such targets are then used to compute the error of each individual layer, which in turn is used to update the layer parameters.
+\VUname{Target propagation} (sometimes abbreviated to targetprop) is an alternative approach to computing the gradients of a deep feedforward neural network. The idea dates back to \cite{lecun_learning_1986}, but has recently gained more interest (\cite{bengio_how_2014}, \cite{bengio_towards_2015}, \cite{lee_difference_2015}). Unlike the back-propagation algorithm, the target propagation algorithm is only defined for optimization of feedforward neural networks used in classification problems. For a high-level overview, the back-propagation algorithm can be summarized as follows: The error of the network is computed at the end of the network (after the loss function) and then back-propagated through the network to each layer, where it is used to update the layer parameters. The target propagation algorithm can be viewed as operating conversely: The desired output of the network is back-propagated through the network, creating a \VUname{target} for each layer. Such targets are then used to compute the error of each individual layer, which in turn is used to update the layer parameters.
 
 \todo{Why targetprop? - Motivation}
 
@@ -20,24 +20,24 @@ The open question remaining is how to choose the targets for the layers. For the
 \begin{equation}\label{targetprop_last_layer_target}
 	\widehat{\VUvec{h}}^{(n)} = \widehat{\VUvec{y}} - \eta \nabla_{\widehat{\VUvec{y}}} L \left( \widehat{\VUvec{y}}, \VUvec{y} \right)
 \end{equation}
-where \( \eta \) is the step size of the learning algorithm. This is the same result as in back-propagation.
+where \( \eta \) is a step size, i. e. a hyperparameter. Choosing \( \eta = 0.5 \) effectively makes \( \widehat{\VUvec{h}}^{(n)} \) the same as it would be for back-propagation.
 
 If all the necessary functions were invertible, a trivial choice of the target for lower levels of the network would be the inverse image of the desired output \( \VUvec{y} \). Then the layer-local loss function value would be \( L_i = L \left( \widehat{\VUvec{h}}^{(i)}, \widehat{\VUvec{h}}^{(i)} \right) = 0 \). This trivial choice is, however, practically unfeasible -- the functions in question may not be invertible (e. g. when a ReLU activation function is used). Moreover, such targets may actually not be in the domains of the layer functions \( f^{(i)} \). To circumvent these issues, two variations of target propagation have been proposed. (\cite{bengio_how_2014} and \cite{lee_difference_2015})
 
 \section{Vanilla target propagation}
 
 Vanilla target propagation tries to replace the actual inverse image by an approximation. That is, for each layer \( f^{(i)} \) there is defined an approximate inverse function \( \widetilde{f}^{(i)} \), such that
-\[ f^{(i)} \left( \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right) \right) \approx \VUvec{h}^{(i)} \qquad \text{and} \qquad \widetilde{f}^{(i)} \left( f^{(i)} \left( \VUvec{h}^{(i - 1)} \right) \right) = \VUvec{h}^{(i - 1)} \]
+\[ f^{(i)} \left( \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right) \right) \approx \VUvec{h}^{(i)} \qquad \text{and} \qquad \widetilde{f}^{(i)} \left( f^{(i)} \left( \VUvec{h}^{(i - 1)} \right) \right) \approx \VUvec{h}^{(i - 1)} \]
 The target can then be chosen as the approximate inverse image represented by
 \[ \widehat{\VUvec{h}}^{(i - 1)} = \widetilde{f}^{(i)} \left( \widehat{\VUvec{h}}^{(i)} \right) \]
 The approximate inverse function \( \widetilde{f}^{(i)} \) is realized by a neural network layer (in a sense introducing a dual neural network), that is
 \[ \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right) = \widetilde{\sigma}^{(i)} \left( \left( {\widetilde{\VUmat{W}}}^{(i)} \right)^T \VUvec{h}^{(i)} + \widetilde{\VUvec{b}}^{(i)} \right) \]
 This approach is grounded in the fact that using a neural network layer as the approximate inverse function makes the pair \( \left( f^{(i)}, \widetilde{f}^{(i)} \right) \) effectively an \VUname{auto-encoder} (\cite{bourlard_auto-association_1988}). This connection can be used to apply results holding for auto-encoders to target propagation.
 
-Introducing another neural network allows the original neural network to be effectively trained using target propagation, but only at the cost of having to train the dual network. However, one of the aforementioned benefits of having the connection to auto-encoders is the fact that the dual network can be trained as a decoder layer in an auto-encoder -- training \( \widetilde{f}^{(i)} \) only to be a good predictor of \( {f^{(i)}}^{-1} \). This is achieved by introducing a dual layer-local loss function
+Introducing another neural network allows the original neural network to be effectively trained using target propagation, but only at the cost of having to train the dual network. However, one of the aforementioned benefits of having the connection to auto-encoders is the fact that the dual network can be trained as a decoder layer in an auto-encoder -- training \( \widetilde{f}^{(i)} \) only to be a good predictor of \( {f^{(i)}}^{-1} \). This is achieved by introducing a \VUname{dual layer-local loss function}
 \[ \widetilde{L}_i = L \left( \widetilde{f}^{(i)} \left( f^{(i)} \left( \VUvec{h}^{(i - 1)} \right) \right), \VUvec{h}^{(i - 1)} \right) \]
 This choice would, however, only minimize the error at \( \VUvec{h}^{(i - 1)} \). It is more desirable to minimize the error not only at this singular point but also in its neighbourhood. To achieve this, random noise is injected into the input of the dual layer-local loss function, effectively making it
-\[ \widetilde{L}_i = L \left( \widetilde{f}^{(i)} \left( f^{(i)} \left( \VUvec{h}^{(i - 1)} + \varepsilon \right) \right), \VUvec{h}^{(i - 1)} + \varepsilon \right) \quad \text{where} \quad \varepsilon \sim N \left( 0, \sigma \right) \]
+\[ \widetilde{L}_i = L \left( \widetilde{f}^{(i)} \left( f^{(i)} \left( \VUvec{h}^{(i - 1)} + \varepsilon \right) \right), \VUvec{h}^{(i - 1)} + \varepsilon \right) \quad \text{where} \quad \varepsilon \sim \mathcal{N} \left( 0, \sigma^2 \right) \]
 
 To prove that target propagation is an effective way to learn neural networks, \cite{lee_difference_2015} state and prove the following theorem:
 

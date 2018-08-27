@@ -1,11 +1,11 @@
 \chapter{An algebraic formalism for Multi-instance learning}
 
 \VUname{Multi-instance learning} is a class of machine learning algorithms, first described by \cite{dietterich_solving_1997}, that can be used for both \VUname{supervised} (see \cite{amores_multiple_2013}) as well as \VUname{unsupervised} (see \cite{zhang_multi-instance_2009}, \cite{chen_contextual_2012}) learning. While classical machine learning algorithms typically require a sample to be represented as a vector of numbers, multi-instance learning relaxes this requirement by representing a sample as a \VUname{bag} of an arbitrary number of objects with a singular label for the whole bag. \cite{dedic_hierarchicke_2017} describes a novel approach to the formalization of multi-instance learning, a liberal translation of which constitutes the following chapter.
-In order to correctly describe the notion of a bag using mathematical notation, a few theoretical definitions are needed.
+In order to correctly describe the notion of a bag using mathematical notation, a few theoretical definitions are needed first.
 
 \section{Multisets}
 
-A multiset is a set allowing repeated elements, or alternatively an unordered tuple. \cite{knuth_art_1968} defines the concept as follows:
+A multiset is a set allowing repeated elements, or alternatively an unordered tuple. \cite{knuth_art_1968} formally defines the concept as follows:
 
 \begin{define}
 	Let \( \VUset{A} \) be a set and \( m : \VUset{A} \to \VUfield{N} \setminus \left\{ 0 \right\} \). The tuple \( \left( \VUset{A}, m \right) \) is called a \VUname{multiset} over the set \( \VUset{A} \). For an \( a \in \VUset{A} \), the number \( m \left( a \right) \) is called the \VUname{multiplicity} (i. e. number of occurrences) of \( a \). If \( a \in \VUset{A} \), then \( a \) is called an element of \( \left( \VUset{A}, m \right) \) and denoted as
@@ -35,7 +35,7 @@ The previous definition allows for a generalization of the concept of a power se
 \end{define}
 
 \begin{remark}
-	A power set of \( \VUset{A} \) may be seen as a set of all function from \( \VUset{A} \) to \( \left\{ 0, 1 \right\} \), sometimes written as \( \left\{ 0, 1 \right\}^{\VUset{A}} \). \( \left\{ 0, 1 \right\} \) coincides with the von Neumann ordinal 2, therefore the power set is often denoted \( 2^{\VUset{A}} \). Similarly, the power multiset may be seen as a set of all functions from \( \VUset{A} \) to \( \VUfield{N} \) ( where \( 0 \in \VUfield{N} \)). It is therefore possible to use an analogous notation \( \mathcal{P}^M \left( \VUset{A} \right) = \VUfield{N}^\VUset{A} \). This analogy extends to the size of the sets in question where
+	A power set of \( \VUset{A} \) may be seen as a set of all function from \( \VUset{A} \) to \( \left\{ 0, 1 \right\} \), sometimes written as \( \left\{ 0, 1 \right\}^{\VUset{A}} \). \( \left\{ 0, 1 \right\} \) coincides with the von Neumann ordinal 2, therefore the power set is often denoted \( 2^{\VUset{A}} \). Similarly, the power multiset may be seen as a set of all functions from \( \VUset{A} \) to \( \VUfield{N} \) (where \( 0 \in \VUfield{N} \)). It is therefore possible to use an analogous notation \( \mathcal{P}^M \left( \VUset{A} \right) = \VUfield{N}^\VUset{A} \). This analogy extends to the size of the sets in question where
 	\[ \left\lvert 2^{\VUset{A}} \right\rvert = 2^{\left\lvert \VUset{A} \right\rvert} \qquad \text{and} \qquad \left\lvert \VUfield{N}^\VUset{A} \right\rvert = + \infty \]
 	for all \( \VUset{A} \neq \emptyset \).
 \end{remark}

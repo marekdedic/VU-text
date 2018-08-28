@@ -78,24 +78,6 @@ The model was tested with 3 activation functions. For each of these activation f
 	\caption{Results with the swish activation function.}\label{swish}
 \end{figure}
 
-\begin{graph}[h]
-	\centering
-	\includegraphics[width=\textwidth]{images/temp-tanh.png}
-	\caption{Results with the tanh activation function}
-\end{graph}
-
-\begin{graph}[h]
-	\centering
-	\includegraphics[width=\textwidth]{images/temp-relu.png}
-	\caption{Results with the ReLU activation function}
-\end{graph}
-
-\begin{graph}[h]
-	\centering
-	\includegraphics[width=\textwidth]{images/temp-swish.png}
-	\caption{Results with the swish activation function}
-\end{graph}
-
 \section{Explanation of the results}
 
 As can be seen from the results, the model fails to learn anything more than a simple linear separation. In this section, a possible explanation of this behaviour is proposed.
@@ -108,8 +90,6 @@ If it is assumed that the functions \( f \) and \( \widetilde{f}^{-1} \) are lin
 \[ \VUvec{x}_1 = \widehat{\VUvec{x}} + \widehat{\VUvec{x}}_1^\perp \quad \text{where} \quad \widehat{\VUvec{x}}_1^\perp \in \mathrm{Ker} \left( f \right) \]
 \[ \VUvec{x}_2 = \widehat{\VUvec{x}} + \widehat{\VUvec{x}}_2^\perp \quad \text{where} \quad \widehat{\VUvec{x}}_2^\perp \in \mathrm{Ker} \left( f \right) \]
 Then \( f \left( \VUvec{x}_1 \right) = f \left( \VUvec{x}_2 \right) \).
-
-TODO: Use the rank-nullity theorem to say something about the dimension of \( P + \mathrm{Ker} \left( f \right) \)?
 
 \subsection{Testing the hypothesis}
 

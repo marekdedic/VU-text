@@ -15,11 +15,11 @@ This means the points lie on an ellipse with the center at \( \begin{pmatrix} 0.
 
 A random noise was added to both elements of all data points in both classes. The noise was drawn from \( \mathcal{N} \left(0, 0.025 \right) \).
 
-\begin{graph}[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{images/two-moon/two-moon.pdf}
 	\caption{Example of a Two-moon dataset}\label{twomoon}
-\end{graph}
+\end{figure}
 
 \todo{Backprop on this DS}
 
@@ -33,7 +33,7 @@ To learn the inverse mappings the same model was used for both of the first two 
 
 The model was tested with 3 activation functions. For each of these activation functions, a heatmap of predictions in the whole \( \left( 0, 1 \right) \times \left( 0, 1 \right \) space was plotted to visualise the results. Also, a record of model loss on the testing dataset was kept, although no training was ever done on the testing dataset. For the results, see figures \ref{tanh}, \ref{relu}, \ref{swish}. \todo{Scaling}
 
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering
@@ -48,7 +48,7 @@ The model was tested with 3 activation functions. For each of these activation f
 	\caption{Results with the tanh activation function.}\label{tanh}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering
@@ -63,7 +63,7 @@ The model was tested with 3 activation functions. For each of these activation f
 	\caption{Results with the ReLU activation function.}\label{relu}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering

@@ -31,24 +31,69 @@ To learn the inverse mappings the same model was used for both of the first two 
 
 \section{Results}
 
-The model was tested with 3 activation functions. See figures \ref{tanh}, \ref{relu}, \ref{swish}. \todo{Proper figures}
+The model was tested with 3 activation functions. For each of these activation functions, a heatmap of predictions in the whole \( \left( 0, 1 \right) \times \left( 0, 1 \right \) space was plotted to visualise the results. Also, a record of model loss on the testing dataset was kept, although no training was ever done on the testing dataset. For the results, see figures \ref{tanh}, \ref{relu}, \ref{swish}. \todo{Scaling}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/tanh-heatmap/tanh.pdf}
+		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset.}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/tanh-modelloss/tanh.pdf}
+		\caption{Model loss on the testing dataset over 2000 epochs of training}
+	\end{subfigure}
+	\caption{Results with the tanh activation function.}\label{tanh}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/relu-heatmap/relu.pdf}
+		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset.}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/relu-modelloss/relu.pdf}
+		\caption{Model loss on the testing dataset over 2000 epochs of training}
+	\end{subfigure}
+	\caption{Results with the ReLU activation function.}\label{relu}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/swish-heatmap/swish.pdf}
+		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset.}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/swish-modelloss/swish.pdf}
+		\caption{Model loss on the testing dataset over 2000 epochs of training}
+	\end{subfigure}
+	\caption{Results with the swish activation function.}\label{swish}
+\end{figure}
 
 \begin{graph}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/temp-tanh.png}
-	\caption{Results with the tanh activation function}\label{tanh}
+	\caption{Results with the tanh activation function}
 \end{graph}
 
 \begin{graph}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/temp-relu.png}
-	\caption{Results with the ReLU activation function}\label{relu}
+	\caption{Results with the ReLU activation function}
 \end{graph}
 
 \begin{graph}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/temp-swish.png}
-	\caption{Results with the swish activation function}\label{swish}
+	\caption{Results with the swish activation function}
 \end{graph}
 
 \section{Explanation of the results}

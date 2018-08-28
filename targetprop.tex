@@ -24,7 +24,7 @@ where \( \eta \) is a step size, i. e. a hyperparameter. Choosing \( \eta = 0.5 
 
 If all the necessary functions were invertible, a trivial choice of the target for lower levels of the network would be the inverse image of the desired output \( \VUvec{y} \). Then the layer-local loss function value would be \( L_i = L \left( \widehat{\VUvec{h}}^{(i)}, \widehat{\VUvec{h}}^{(i)} \right) = 0 \). This trivial choice is, however, practically unfeasible -- the functions in question may not be invertible (e. g. when a ReLU activation function is used). Moreover, such targets may actually not be in the domains of the layer functions \( f^{(i)} \). To circumvent these issues, two variations of target propagation have been proposed. (\cite{bengio_how_2014} and \cite{lee_difference_2015})
 
-\section{Vanilla target propagation}
+\section{Vanilla target propagation}\label{vanilla_targetprop}
 
 Vanilla target propagation tries to replace the actual inverse image by an approximation. That is, for each layer \( f^{(i)} \) there is defined an approximate inverse function \( \widetilde{f}^{(i)} \), such that
 \[ f^{(i)} \left( \widetilde{f}^{(i)} \left( \VUvec{h}^{(i)} \right) \right) \approx \VUvec{h}^{(i)} \qquad \text{and} \qquad \widetilde{f}^{(i)} \left( f^{(i)} \left( \VUvec{h}^{(i - 1)} \right) \right) \approx \VUvec{h}^{(i - 1)} \]

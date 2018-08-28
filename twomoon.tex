@@ -31,7 +31,9 @@ To learn the inverse mappings the same model was used for both of the first two 
 
 \section{Results}
 
-The model was tested with 3 activation functions. For each of these activation functions, a heatmap of predictions in the whole \( \left( 0, 1 \right) \times \left( 0, 1 \right \) space was plotted to visualise the results. Also, a record of model loss on the testing dataset was kept, although no training was ever done on the testing dataset. For the results, see figures \ref{tanh}, \ref{relu}, \ref{swish}. \todo{Scaling}
+The model was tested with 3 activation functions. For each of these activation functions, a heatmap of predictions in the whole \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) space was plotted to visualise the results. Also, a record of model loss on the testing dataset was kept, although no training was ever done on the testing dataset. For the results, see figures \ref{tanh}, \ref{relu}, \ref{swish}. \todo{Scaling}
+
+As can be seen from the figures, the model fails to learn a classifier of the two-moon dataset. \todo{compare to backprop} An explanation of this behaviour is attempted in the following sections. Because the behaviour is very similar for all three used activations, only the ReLU activation will be considered further on.
 
 \begin{figure}
 	\centering
@@ -80,9 +82,23 @@ The model was tested with 3 activation functions. For each of these activation f
 
 \section{Explanation of the results}
 
-As can be seen from the results, the model fails to learn anything more than a simple linear separation. In this section, a possible explanation of this behaviour is proposed.
+As a result of the architecture of a target-propagation model, the most crucial layer for the learning is the last layer, particularly the inverse mapping (i. e. the auto-encoder). The reasoning behind this claim is that if the calculated inverse function doesn't coincide with the actual inverse function, the computed target for the previous layer doesn't represent the desired target. That in turns means that the previous layer doesn't properly learn, which in turn makes its dual layer not learn the desired inverse, propagating the issue backwards through the whole model.
 
-As a result of the architecture of a target-propagation model, the most crucial layer for the learning is the last layer, particularly the inverse mapping (i. e. the auto-encoder). The reasoning behind this claim is that if the calculated inverse function doesn't coincide with the actual inverse function, the computed target for the previous layer doesn't represent the desired target. That in turns means that the previous layer doesn't properly learn, which in turn makes its dual layer not learn the desired inverse, propagating the issue backwards through the whole model. This failure to learn the last layer inverse is clearly manifested in the relatively high values of the dual layer-local loss function.
+Figures \ref{layer1_losses} and \ref{layer2_losses} show the layer-local loss function (see section \ref{targetprop_general}) and the dual layer-local loss function (see section \ref{vanilla_targetprop}) values over the learning period. The failure to learn the last layer inverse is clearly manifested in the relatively high values of the dual layer-local loss function of the second layer.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/relu-layer1/layer1.pdf}
+	\caption{Layer local losses for the first layer over 2000 epochs of training}\label{layer1_losses}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/relu-layer2/layer2.pdf}
+	\caption{Layer local losses for the second layer over 2000 epochs of training}\label{layer2_losses}
+\end{figure}
+
+\subsection{A hypothesis: The classifier is non-invertible}
 
 A possible explanation for this phenomenon follows as such: Let \( \VUvec{x} \) be the input of the last layer, denoted \( f \). Suppose that the function \( f \) is not injective, that is there exist \( \VUvec{x}_1 \) and \( \VUvec{x}_2 \) such that \( f \left( \VUvec{x}_1 \right) = f \left( \VUvec{x}_2 \right) \). Then necessarily \( \widetilde{f}^{-1} \left( f \left( \VUvec{x}_1 \right) \right) = \widetilde{f}^{-1} \left( f \left( \VUvec{x}_2 \right) \right) \) which means that generally \( \widetilde{f}^{-1} \left( f \left( \VUvec{x} \right) \right) \not\approx \VUvec{x} \).
 

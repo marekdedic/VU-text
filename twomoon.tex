@@ -31,25 +31,25 @@ To learn the inverse mappings the same model was used for both of the first two 
 
 \section{Results}
 
-The model was tested with 3 activation functions. See figures \ref{tanh}, \ref{relu}, \ref{swish}.
+The model was tested with 3 activation functions. See figures \ref{tanh}, \ref{relu}, \ref{swish}. \todo{Proper figures}
 
-\begin{figure}[h]
+\begin{graph}[h]
 	\centering
-	\includegraphics[width=500pt]{images/temp-tanh.png}
+	\includegraphics[width=\textwidth]{images/temp-tanh.png}
 	\caption{Results with the tanh activation function}\label{tanh}
-\end{figure}
+\end{graph}
 
-\begin{figure}[h]
+\begin{graph}[h]
 	\centering
-	\includegraphics[width=500pt]{images/temp-relu.png}
+	\includegraphics[width=\textwidth]{images/temp-relu.png}
 	\caption{Results with the ReLU activation function}\label{relu}
-\end{figure}
+\end{graph}
 
-\begin{figure}[h]
+\begin{graph}[h]
 	\centering
-	\includegraphics[width=500pt]{images/temp-swish.png}
+	\includegraphics[width=\textwidth]{images/temp-swish.png}
 	\caption{Results with the swish activation function}\label{swish}
-\end{figure}
+\end{graph}
 
 \section{Explanation of the results}
 
@@ -79,3 +79,17 @@ This in turn means that
 \[ \VUvec{x}_i - \frac{1}{n}\sum_{i = 1}^n \VUvec{x}_i \approx \widehat{\VUvec{x}}_i^\perp \]
 Which can be used for testing the non-injectivity of \( f \) by checking whether
 \[ f \left( \VUvec{x}_i - \frac{1}{n}\sum_{i = 1}^n \VUvec{x}_i \right) \approx \VUvec{0} \]
+Note that this is only a necessary condition for the hypothesis, not a sufficient one.
+
+\subsection{results}
+\todo{results}
+Hypothesis wasn't confirmed. \todo{graphs, sugarcoat}
+
+\section{Relation to theorem \ref{targetprop_works}}
+As can be seen in graph \todo{ref}, the angle between the backpropagation update and the targetpropagation update isn't close to 0. This phenomenon seems to contradict the claim of theorem \ref{targetprop_works}. In order to validate the implementation and to resolve this discrepancy, the lower bound on the cosine of the angle between \( \delta \VUmat{W}_{\mathrm{BP}}^{(i)} \) and \( \delta \VUmat{W}_{\mathrm{TP}}^{(i)} \) was computed for all the layers over the learning epochs. The terms \( \Delta_1 \left( \eta \right) \) and \(  \Delta_2 \left( \eta \right) \) were considered to be 0. Graph \todo{graph} shows the development of the lower bound over the learning period. It is expressed as the upper bound on the angle, i. e. as the bound
+\[ \cos^{-1} \left( \frac{\lambda_{\mathrm{min}}}{\lambda_{\mathrm{max}}} \right) > \alpha \]
+
+When considered together with the actual angles shown in graph \todo{ref}, it is clear that the actual angles follow the upper bound, which is very high however. That means that while the experiment satisfies theorem \ref{targetprop_works}, the theorem doesn't provide any actual limitation on the learning process and doesn't contradict the relative failure to learn.
+
+\section{Learning using close approximations of the actual inverses}
+The results of the previous section lead to the question of whether the model would learn using the actual inverses instead of the approximate inverse function \( \widetilde{f}^{(i)} \). As is asserted in section \ref{targetprop_general}, computing the actual inverse isn't always possible. It is, however, possible to use a stronger approximation for the inverse. The chosen approach is to use the Limited-memory Broyden-Fletcher-Goldfarb-Shanno algorithm (see \cite{liu_limited_1989}).

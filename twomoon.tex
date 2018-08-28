@@ -86,7 +86,7 @@ As a result of the architecture of a target-propagation model, the most crucial 
 
 A possible explanation for this phenomenon follows as such: Let \( \VUvec{x} \) be the input of the last layer, denoted \( f \). Suppose that the function \( f \) is not injective, that is there exist \( \VUvec{x}_1 \) and \( \VUvec{x}_2 \) such that \( f \left( \VUvec{x}_1 \right) = f \left( \VUvec{x}_2 \right) \). Then necessarily \( \widetilde{f}^{-1} \left( f \left( \VUvec{x}_1 \right) \right) = \widetilde{f}^{-1} \left( f \left( \VUvec{x}_2 \right) \right) \) which means that generally \( \widetilde{f}^{-1} \left( f \left( \VUvec{x} \right) \right) \not\approx \VUvec{x} \).
 
-If it is assumed that the functions \( f \) and \( \widetilde{f}^{-1} \) are linear, than the non-injectivity of \( f \) means that for the previously mentioned \( x_1 \) and \( x_2 \), there exist decompositions
+It is a reasonable simplification to assume the functions \( f \) and \( \widetilde{f}^{-1} \) linear due to the nature of the ReLU activation function. Under this assumption, the non-injectivity of \( f \) means that for the previously mentioned \( x_1 \) and \( x_2 \), there exist decompositions
 \[ \VUvec{x}_1 = \widehat{\VUvec{x}} + \widehat{\VUvec{x}}_1^\perp \quad \text{where} \quad \widehat{\VUvec{x}}_1^\perp \in \mathrm{Ker} \left( f \right) \]
 \[ \VUvec{x}_2 = \widehat{\VUvec{x}} + \widehat{\VUvec{x}}_2^\perp \quad \text{where} \quad \widehat{\VUvec{x}}_2^\perp \in \mathrm{Ker} \left( f \right) \]
 Then \( f \left( \VUvec{x}_1 \right) = f \left( \VUvec{x}_2 \right) \).
@@ -94,9 +94,9 @@ Then \( f \left( \VUvec{x}_1 \right) = f \left( \VUvec{x}_2 \right) \).
 \subsection{Testing the hypothesis}
 
 A way to test test this hypothesis would be to use the property \( \VUvec{x}_1 - \VUvec{x}_2 = \VUvec{x}_1^\perp - \VUvec{x}_2^\perp \in \mathrm{Ker} \left( f \right) \). For a dataset of \( n \) samples, this would mean testing for
-\[ f \left( \sum_{i = 1}^{n - 1} \VUvec{x}_{i + 1} - \VUvec{x}_i \right) = f \left( \sum_{i = 1}^{n - 1} \widehat{\VUvec{x}}_{i + 1}^\perp - \widehat{\VUvec{x}}_i^\perp \right) = \VUvec{0} \]
+\[ f \left( \sum_{i = 1}^{n - 1} \left( \VUvec{x}_{i + 1} - \VUvec{x}_i \right) \right) = f \left( \sum_{i = 1}^{n - 1} \left( \widehat{\VUvec{x}}_{i + 1}^\perp - \widehat{\VUvec{x}}_i^\perp \right) \right) = \VUvec{0} \]
 
-If it is presumed that \( \widehat{\VUvec{x}}^\perp \sim \mathcal{N} \left(0, \sigma^2 \right) \), then a test may be devised using the property \( \VUvec{x}_1 + \VUvec{x}_2 = 2 \widehat{\VUvec{x}} + \widehat{\VUvec{x}}_1^\perp + \widehat{\VUvec{x}}_2^\perp \) where \( \widehat{\VUvec{x}}_1^\perp + \widehat{\VUvec{x}}_2^\perp \sim \mathcal{N} \left( 0, 2 \sigma^2 \right) \). For a dataset of \( n \) samples, this would mean that
+If it is presumed that \( \widehat{\VUvec{x}}^\perp \sim \mathcal{N} \left(0, \sigma^2 \right) \), then another test may be devised using the property \( \VUvec{x}_1 + \VUvec{x}_2 = 2 \widehat{\VUvec{x}} + \widehat{\VUvec{x}}_1^\perp + \widehat{\VUvec{x}}_2^\perp \) where \( \widehat{\VUvec{x}}_1^\perp + \widehat{\VUvec{x}}_2^\perp \sim \mathcal{N} \left( 0, 2 \sigma^2 \right) \). For a dataset of \( n \) samples, this would mean that
 \[ \sum_{i = 1}^n \VUvec{x}_i = n \widehat{\VUvec{x}} + \sum_{i = 1}^n \widehat{\VUvec{x}}_i^\perp \quad \text{where} \quad \sum_{i = 1}^n \widehat{\VUvec{x}}_i^\perp \sim \mathcal{N} \left( 0, n \sigma^2 \right) \]
 Using the property \( X \sim \mathcal{N} \left( 0, \sigma^2 \right) \implies kX \sim \mathcal{N} \left( 0, k^2 \sigma^2 \right) \), it can be deduced that
 \[ \frac{1}{n}\sum_{i = 1}^n \VUvec{x}_i = \widehat{\VUvec{x}} + \frac{1}{n}\sum_{i = 1}^n \widehat{\VUvec{x}}_i^\perp \quad \text{where} \quad \frac{1}{n}\sum_{i = 1}^n \widehat{\VUvec{x}}_i^\perp \sim \mathcal{N} \left( 0, \frac{\sigma^2}{n} \right) \]

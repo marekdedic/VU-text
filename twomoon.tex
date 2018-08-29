@@ -166,9 +166,11 @@ Note that this upper bound considers the update of all parameters of the model, 
 	\caption{Upper bound on the angle \( \alpha \) from theorem \ref{targetprop_works} (in degrees) over 2000 learning epochs}\label{angle-bound}
 \end{figure}
 
-When considered together with the actual angles, it is clear that the actual angles occasionally follow the upper bound, which is very high however. That means that while the experiment satisfies theorem \ref{targetprop_works}, the theorem doesn't provide any actual limitation on the learning process and doesn't contradict the relative failure to learn.
+When considered together with the actual angles, it is clear that the actual angles occasionally follow the general trend of the upper bound. For most of the learning period, the bound is very high however. That means that while the experiment satisfies theorem \ref{targetprop_works}, the theorem doesn't provide any actual limitation on the learning process and doesn't contradict the relative failure to learn.
 
 \section{Learning using close approximations of the actual inverses}
-The results of the previous section lead to the question of whether the model would learn using the actual inverses instead of the approximate inverse function \( \widetilde{f}^{(i)} \). As is asserted in section \ref{targetprop_general}, computing the actual inverse isn't always possible. It is, however, possible to use a stronger approximation for the inverse. The chosen approach is to use the Limited-memory Broyden-Fletcher-Goldfarb-Shanno algorithm (see \cite{liu_limited_1989}).
+The results of the previous section lead to the question of whether the model would learn using the actual inverses instead of the approximate inverse function \( \widetilde{f}^{(i)} \). As is asserted in section \ref{targetprop_general}, computing the actual inverse isn't always possible. It is, however, possible to use a stronger approximation for the inverse. The chosen approach was to use the Limited-memory Broyden-Fletcher-Goldfarb-Shanno algorithm (see \cite{liu_limited_1989}).
+
+\todo{LBFGS results}
 
 \todo{DTP}

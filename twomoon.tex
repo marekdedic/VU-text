@@ -21,19 +21,17 @@ A random noise was added to both elements of all data points in both classes. Th
 	\caption{Example of a Two-moon dataset}\label{twomoon}
 \end{figure}
 
-\todo{Backprop on this DS}
-
 \section{The used model}
 
-The model used to classify these samples is a layer of 16 neurons, followed by a layer of 2 neurons, followed by the softmax function in order to represent the output as a measure of confidence that a given sample belongs to a given class. The activations used for the neurons were the tanh function, the ReLU function (see \cite{hahnloser_digital_2000}) and the swish function (see \cite{ramachandran_searching_2018}). ADAM (see \cite{kingma_adam:_2014}) was used as the optimisation method. The mean squared error function was used as the model loss as well as the layer-local loss function for all the layers. The training dataset consisted of a 1000 random samples, the testing dataset was 100 samples. The network was taught on the training dataset in 2000 epochs.
+The model used to classify these samples was a layer of 16 neurons, followed by a layer of 2 neurons, followed by the softmax function in order to represent the output as a measure of confidence that a given sample belongs to a given class. The activations used for the neurons were the tanh function, the ReLU function (see \cite{hahnloser_digital_2000}) and the swish function (see \cite{ramachandran_searching_2018}). ADAM (see \cite{kingma_adam:_2014}) was used as the optimisation method. The mean squared error function was used as the model loss as well as the layer-local loss function for all the layers. The training dataset consisted of a 1000 random samples, the testing dataset was 1000 samples as well. The network was taught on the training dataset in 2000 epochs.
 
 To learn the inverse mappings the same model was used for both of the first two layers. This model consisted of a layer of 8 neurons followed by a layer with as many neurons as was the required input dimension. The second of those used identity as an activation function, the first used the same activation as the rest of the network. The inverse mapping for the softmax function consisted of a layer of 4 neurons followed by a layer of 2 neurons with the identity function as its activation. The mean squared error function was used as the dual layer-local loss function for all the inverse mappings. The noise inserted for the auto-encoder training was \( \varepsilon \sim N \left( 0, 0.2 \right) \). The step size for the last layer target (see equation \ref{targetprop_last_layer_target}) was \( \eta = 0.5 \).
 
 \section{Results}
 
-The model was tested with 3 activation functions. For each of these activation functions, a heatmap of predictions in the whole \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) space was plotted to visualise the results. Also, a record of model loss on the testing dataset was kept, although no training was ever done on the testing dataset. For the results, see figures \ref{tanh}, \ref{relu}, \ref{swish}. \todo{Scaling}
+The model was tested with 3 activation functions. For each of these activation functions, a heatmap of predictions in the whole \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) space was plotted to visualise the results. Also, a record of model loss on the testing dataset was kept, although no training was ever done on the testing dataset. For the results, see figures \ref{tanh}, \ref{relu}, \ref{swish}\todo{wrong heatmaps}. \todo{Scaling}
 
-As can be seen from the figures, the model fails to learn a classifier of the two-moon dataset. \todo{compare to backprop} An explanation of this behaviour is attempted in the following sections. Because the behaviour is very similar for all three used activations, only the ReLU activation will be considered further on.
+As can be seen from the figures, the model fails to learn a classifier of the two-moon dataset. An explanation of this behaviour is attempted in the following sections. Because the behaviour is very similar for all three used activations, only the ReLU activation will be considered further on.
 
 \begin{figure}
 	\centering
@@ -78,6 +76,24 @@ As can be seen from the figures, the model fails to learn a classifier of the tw
 		\caption{Model loss on the testing dataset over 2000 epochs of training}
 	\end{subfigure}
 	\caption{Results with the swish activation function.}\label{swish}
+\end{figure}
+
+\section{A reference backpropagation model}
+A reference model was implemented and trained using backpropagation. The model was chosen to be as similar to the target propagation model as possible. The model was a layer of 16 neurons, followed by a layer of 2 neurons, followed by the softmax function. The activation used for the neurons was the ReLU function. ADAM was used as the optimisation method. The mean squared error function was used as the model loss. The training dataset consisted of 1000 random samples, the testing dataset was 1000 samples as well. The network was taught on the training dataset in 2000 epochs. Figure \ref{backprop_model} shows the results of the model. It is clearly visible that the model learned a separation marginally better than a linear separation of the classes. The model wouldn't be considered a very good one due to a large number of misses, but it clearly outperforms any of the models based on target propagation.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/backprop-heatmap/backprop.pdf}
+		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset.}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/backprop-modelloss/backprop.pdf}
+		\caption{Model loss on the testing dataset over 2000 epochs of training}
+	\end{subfigure}
+	\caption{Results of the backpropagation model.}\label{backprop_model}
 \end{figure}
 
 \section{Explanation of the results}

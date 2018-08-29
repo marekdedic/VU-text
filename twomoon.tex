@@ -110,7 +110,9 @@ Then \( f \left( \VUvec{x}_1 \right) = f \left( \VUvec{x}_2 \right) \).
 \subsection{Testing the hypothesis}
 
 A way to test test this hypothesis would be to use the property \( \VUvec{x}_1 - \VUvec{x}_2 = \VUvec{x}_1^\perp - \VUvec{x}_2^\perp \in \mathrm{Ker} \left( f \right) \). For a dataset of \( n \) samples, this would mean testing for
-\[ f \left( \sum_{i = 1}^{n - 1} \left( \VUvec{x}_{i + 1} - \VUvec{x}_i \right) \right) = f \left( \sum_{i = 1}^{n - 1} \left( \widehat{\VUvec{x}}_{i + 1}^\perp - \widehat{\VUvec{x}}_i^\perp \right) \right) = \VUvec{0} \]
+\begin{equation}\label{difference_test}
+	f \left( \sum_{i = 1}^{n - 1} \left( \VUvec{x}_{i + 1} - \VUvec{x}_i \right) \right) = f \left( \sum_{i = 1}^{n - 1} \left( \widehat{\VUvec{x}}_{i + 1}^\perp - \widehat{\VUvec{x}}_i^\perp \right) \right) = \VUvec{0}
+\end{equation}
 
 If it is presumed that \( \widehat{\VUvec{x}}^\perp \sim \mathcal{N} \left(0, \sigma^2 \right) \), then another test may be devised using the property \( \VUvec{x}_1 + \VUvec{x}_2 = 2 \widehat{\VUvec{x}} + \widehat{\VUvec{x}}_1^\perp + \widehat{\VUvec{x}}_2^\perp \) where \( \widehat{\VUvec{x}}_1^\perp + \widehat{\VUvec{x}}_2^\perp \sim \mathcal{N} \left( 0, 2 \sigma^2 \right) \). For a dataset of \( n \) samples, this would mean that
 \[ \sum_{i = 1}^n \VUvec{x}_i = n \widehat{\VUvec{x}} + \sum_{i = 1}^n \widehat{\VUvec{x}}_i^\perp \quad \text{where} \quad \sum_{i = 1}^n \widehat{\VUvec{x}}_i^\perp \sim \mathcal{N} \left( 0, n \sigma^2 \right) \]
@@ -119,11 +121,21 @@ Using the property \( X \sim \mathcal{N} \left( 0, \sigma^2 \right) \implies kX 
 This in turn means that
 \[ \VUvec{x}_i - \frac{1}{n}\sum_{i = 1}^n \VUvec{x}_i \approx \widehat{\VUvec{x}}_i^\perp \]
 Which can be used for testing the non-injectivity of \( f \) by checking whether
-\[ f \left( \VUvec{x}_i - \frac{1}{n}\sum_{i = 1}^n \VUvec{x}_i \right) \approx \VUvec{0} \]
+\begin{equation}\label{average_test}
+	f \left( \VUvec{x}_i - \frac{1}{n}\sum_{i = 1}^n \VUvec{x}_i \right) \approx \VUvec{0}
+\end{equation}
 Note that this is only a necessary condition for the hypothesis, not a sufficient one.
 
 \subsection{Results}
-\todo{results}
+Both of the tests proposed in the previous section were evaluated on both layers of the model. Figure \ref{difference_test_results} shows the values of the first test, that is the value of
+\[ \left\lVert f \left( \sum_{i = 1}^{n - 1} \left( \VUvec{x}_{i + 1} - \VUvec{x}_i \right) \right) \right\rVert \]
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/relu-difference-test/difference.pdf}
+	\caption{Values of the left-hand side of equation \ref{difference_test} over 2000 learning epochs}\label{difference_test_results}
+\end{figure}
+
 Hypothesis wasn't confirmed. \todo{graphs, sugarcoat}
 
 \section{Relation to theorem \ref{targetprop_works}}

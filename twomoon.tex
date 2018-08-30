@@ -21,7 +21,7 @@ A random noise was added to both elements of all data points in both classes. Th
 	\caption{Example of a Two-moon dataset}\label{twomoon}
 \end{figure}
 
-\section{The used model}
+\section{The used model}\label{model}
 
 The model used to classify these samples was a layer of 16 neurons, followed by a layer of 2 neurons, followed by the softmax function in order to represent the output as a measure of confidence that a given sample belongs to a given class. The activations used for the neurons were the tanh function, the ReLU function (see \cite{hahnloser_digital_2000}) and the swish function (see \cite{ramachandran_searching_2018}). ADAM (see \cite{kingma_adam:_2014}) was used as the optimisation method. The mean squared error function was used as the model loss as well as the layer-local loss function for all the layers. The training dataset consisted of a 1000 random samples, the testing dataset was 1000 samples as well. The network was taught on the training dataset in 2000 epochs.
 
@@ -192,16 +192,38 @@ The results of the previous section lead to the question of whether the model wo
 	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/lbfgs-heatmap/lbfgs.pdf}
-		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset.}
+		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset}
 	\end{subfigure}
 	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{images/lbfgs-modelloss/lbfgs.pdf}
 		\caption{Model loss on the testing dataset over 2000 epochs of training}
 	\end{subfigure}
-	\caption{Results of the model using LBFGS to set targets.}\label{lbfgs}
+	\caption{Results of the model using LBFGS to set targets}\label{lbfgs}
 \end{figure}
 
 The data show that the model doesn't learn even when the close approximations of the actual inverses are used to generate the targets. This is strong evidence that the problem isn't caused by a failure to learn the approximate inverse function \( \widetilde{f}^{(i)} \) (although such a failure is not ruled out), but rather by an issue with the target-propagation algorithm as it was implemented.
 
-\todo{DTP}
+\section{Difference target propagation}
+Figure \ref{difftargetprop} shows the results for the same model as described in section \ref{model} (using the ReLU activation function), only trained using the difference target propagation algorithm. The results imply that difference target propagation shares the shortcomings of the vanilla target propagation algorithm. This claim is further supported by the results of the tests proposed in this chapter, presented compactly in figure \ref{difftargetprop_tests}.
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/difftargetprop-heatmap/difftargetprop.pdf}
+		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/difftargetprop-modelloss/difftargetprop.pdf}
+		\caption{Model loss on the testing dataset over 2000 epochs of training}
+	\end{subfigure}
+	\caption{Results for model taught using difference target propagation}\label{difftargetprop}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/difftargetprop-alltests/difftargetprop.pdf}
+	\caption{All test results for a model taught using difference target propagation}\label{difftargetprop_tests}
+\end{figure}

@@ -78,19 +78,3 @@
 \newcommand{\VUmat}{\ensuremath{\mathbf}}
 
 \MakeRobust{\Call}
-\algnewcommand\algorithmicparallelfor{\textbf{parallel for}}
-\algdef{S}[FOR]{ParallelFor}[1]{\algorithmicparallelfor\ #1\ \algorithmicdo}
-\algnewcommand\algorithmicbreak{\State\textbf{break}}
-\algnewcommand\Break{\algorithmicbreak{}}
-
-\newcommand{\result}[3]{%
-	\begin{graph}[h]%
-		\centering%
-		\includegraphics[width=\textwidth]{images/results/#1}%
-		\caption{#3}\label{#2}%
-	\end{graph}%
-}
-
-\floatstyle{plain}
-\newfloat{graph}{tbph}{logr}[chapter]
-\floatname{graph}{Chart}

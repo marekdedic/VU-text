@@ -182,11 +182,26 @@ Note that this upper bound considers the update of all parameters of the model, 
 	\caption{Upper bound on the angle \( \alpha \) from theorem \ref{targetprop_works} (in degrees) over 2000 learning epochs}\label{angle-bound}
 \end{figure}
 
-When considered together with the actual angles, it is clear that the actual angles occasionally follow the general trend of the upper bound. For most of the learning period, the bound is very high however. That means that while the experiment satisfies theorem \ref{targetprop_works}, the theorem doesn't provide any actual limitation on the learning process and doesn't contradict the relative failure to learn.
+When considered together with figure \ref{angle}, it is clear that the actual angles occasionally follow the general trend of the upper bound. For most of the learning period, the bound is very high however. That means that while the experiment satisfies theorem \ref{targetprop_works}, the theorem doesn't provide any actual limitation on the learning process and doesn't contradict the relative failure to learn.
 
-\section{Learning using close approximations of the actual inverses}
-The results of the previous section lead to the question of whether the model would learn using the actual inverses instead of the approximate inverse function \( \widetilde{f}^{(i)} \). As is asserted in section \ref{targetprop_general}, computing the actual inverse isn't always possible. It is, however, possible to use a stronger approximation for the inverse. The chosen approach was to use the Limited-memory Broyden-Fletcher-Goldfarb-Shanno algorithm (see \cite{liu_limited_1989}).
+\section{Learning using close approximations of actual inverses}
+The results of the previous section lead to the question of whether the model would learn using the actual inverse instead of the approximate inverse function \( \widetilde{f}^{(i)} \). As is asserted in section \ref{targetprop_general}, computing the actual inverse isn't always possible. It is, however, possible to use a stronger approximation for the inverse. The chosen approach was to use the Limited-memory Broyden-Fletcher-Goldfarb-Shanno algorithm (LBFGS, see \cite{liu_limited_1989}). Figure \ref{lbfgs} shows the results for a model which used the LBFGS optimiser to propagate the target back through the network. This approach doesn't need a dual layer-local loss function, but is computationally much more demanding.
 
-\todo{LBFGS results}
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/lbfgs-heatmap/lbfgs.pdf}
+		\caption{Heatmap of model predictions on \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) overlaid by the testing dataset.}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{images/lbfgs-modelloss/lbfgs.pdf}
+		\caption{Model loss on the testing dataset over 2000 epochs of training}
+	\end{subfigure}
+	\caption{Results of the model using LBFGS to set targets.}\label{lbfgs}
+\end{figure}
+
+The data show that the model doesn't learn even when the close approximations of the actual inverses are used to generate the targets. This is strong evidence that the problem isn't caused by a failure to learn the approximate inverse function \( \widetilde{f}^{(i)} \) (although such a failure is not ruled out), but rather by an issue with the target-propagation algorithm as it was implemented.
 
 \todo{DTP}

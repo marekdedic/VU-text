@@ -1,2 +1,17 @@
-\chapter*{Introduction}
-\addcontentsline{toc}{chapter}{Introduction}
+\chapter{Introduction}
+
+While simulating a brain is not the goal of machine learning, neuroscience can provide useful inspiration for developing artificial neural networks. The back-propagation algorithm is the \textit{de facto} standard algorithm for computing gradients for learning deep feedforward neural networks, a problem known as the \VUname{credit assignment problem}. It is, however, implausible from a biological point of view (see \cite{crick_recent_1989}). \cite{bengio_towards_2015} presents several arguments for this implausibility:
+\begin{enumerate*}[label=(\arabic*)]
+	\item Back-propagation is linear, whereas biological neurons needn't be
+	\item precise knowledge of gradients of the layers is needed in back-propagation
+	\item The feedback path has to use the same weights as the forward path, a feature not possible in two independent neurons (this requirement was later lifted by the Feedback alignment algorithm, see \cite{lillicrap_random_2016} and \cite{nokland_direct_2016})
+	\item Biological neurons communicate in spikes instead of continuous values
+	\item In back-propagation, the forward and backward passes need to alternate, a mode of operation unlikely to happen biologically
+	\item Back-propagation needs a clearly defined output target, a feature not present in biological systems
+\end{enumerate*}.
+
+Recent works in computational neuroscience (such as \cite{guerguiev_towards_2017}) point to \VUname{target propagation} as one of the algorithms which could simulate biological neurons. Target propagation can be used in a non-linear fashion, the computation of credit doesn't require the same weights as the actual neural network and theoretically doesn't need an alternating mode of operation. That means that target propagation potentially solves some of the previously outlined issues with back propagation.
+
+The aim of this work is to evaluate the viability of target-propagation in the context of more difficult problems and to incorporate target propagation into an architecture more complicated than a simple multi-layer perceptron. Of special interest is the applicability of target-propagation to models for multi-instance learning. The two most easily observed obstacles to a multi-instance target propagation model is the need to learn an approximate inverse of an aggregation function such as the arithmetic mean and the need for a distance function that is well-defined for bags (i. e. sets of vectors). A multi-instance target-propagation model would pave the way for multi-instance auto-encoders and possibly broader applications of multi-instance learning in unsupervised an semi-supervised scenarios.
+
+In the following chapters, first the multi-instance learning paradigm is described and formalised in a novel way which hasn't been published in English yet. An overview of multi-instance models and prior art is included. Then, an outline of the back-propagation algorithm is provided as a reference for future comparisons between back-propagation and target propagation. Chapter \ref{targetprop} explains the motivations behind target propagation and the inner workings of the algorithm. Difference target propagation, the most explored variant of target propagation, is described as well. Finally, the target propagation algorithm is evaluated on a simple dataset and the results are discussed.

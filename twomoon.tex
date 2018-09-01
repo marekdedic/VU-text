@@ -80,8 +80,8 @@ As can be seen from the figures, the model fails to learn a classifier of the tw
 	\caption{Results with the swish activation function}\label{swish}
 \end{figure}
 
-\section{A reference backpropagation model}
-A reference model was implemented and trained using backpropagation. The model was chosen to be as similar to the target propagation model as possible. The model was a layer of 16 neurons, followed by a layer of 2 neurons, followed by the softmax function. The activation used for the neurons was the ReLU function. Layer weights were initialised using Glorot initialisation, bias vectors were initialised to zeros. ADAM was used as the optimisation method. The mean squared error function was used as the model loss. The training dataset consisted of 1000 random samples, the testing dataset was 1000 samples as well. The network was taught on the training dataset in 2000 epochs. Figure \ref{backprop_model} shows the results of the model. It is clearly visible that the model learned a linear separation of the classes. The model wouldn't be considered a very good one due to a fairly large number of misses in the tips of the moons, but it clearly outperforms any of the models based on target propagation.
+\section{A reference back-propagation model}
+A reference model was implemented and trained using back-propagation. The model was chosen to be as similar to the target propagation model as possible. The model was a layer of 16 neurons, followed by a layer of 2 neurons, followed by the softmax function. The activation used for the neurons was the ReLU function. Layer weights were initialised using Glorot initialisation, bias vectors were initialised to zeros. ADAM was used as the optimisation method. The mean squared error function was used as the model loss. The training dataset consisted of 1000 random samples, the testing dataset was 1000 samples as well. The network was taught on the training dataset in 2000 epochs. Figure \ref{backprop_model} shows the results of the model. It is clearly visible that the model learned a linear separation of the classes. The model wouldn't be considered a very good one due to a fairly large number of misses in the tips of the moons, but it clearly outperforms any of the models based on target propagation.
 
 \begin{figure}
 	\centering
@@ -95,7 +95,7 @@ A reference model was implemented and trained using backpropagation. The model w
 		\includegraphics[width=\textwidth]{images/backprop-modelloss/backprop.pdf}
 		\caption{Model loss on the testing dataset over 2000 epochs of training}
 	\end{subfigure}
-	\caption{Results of the backpropagation model}\label{backprop_model}
+	\caption{Results of the back-propagation model}\label{backprop_model}
 \end{figure}
 
 \section{Explanation of the results}
@@ -166,7 +166,7 @@ Based on the relatively hight values in both tests and on the fact that these va
 
 \section{Relation to theorem \ref{targetprop_works}}
 
-An interesting metric which might provide some insight into the workings of target propagation is the angle between the actual target propagation update of the parameters and a theoretical update computed using the backpropagation algorithm. In theorem \ref{targetprop_works}, this angle is denoted \( \alpha \). Figure \ref{angle} shows the value of \( \alpha \) over the learning period. For the second layer, the angle is trivially 0 due to the choice of the last layer target using equation \ref{targetprop_last_layer_target}.
+An interesting metric which might provide some insight into the workings of target propagation is the angle between the actual target propagation update of the parameters and a theoretical update computed using the back-propagation algorithm. In theorem \ref{targetprop_works}, this angle is denoted \( \alpha \). Figure \ref{angle} shows the value of \( \alpha \) over the learning period. For the second layer, the angle is trivially 0 due to the choice of the last layer target using equation \ref{targetprop_last_layer_target}.
 
 \begin{figure}
 	\centering
@@ -174,7 +174,7 @@ An interesting metric which might provide some insight into the workings of targ
 	\caption{Angle \( \alpha \) from theorem \ref{targetprop_works} (in degrees) over 2000 learning epochs}\label{angle}
 \end{figure}
 
-As can be seen in the figure, the angle between the backpropagation update and the target propagation update isn't close to 0 for the first layer. This phenomenon seems to contradict the claim of theorem \ref{targetprop_works}. In order to validate the implementation and to resolve this discrepancy, the lower bound on the cosine of the angle between \( \delta \VUmat{W}_{\mathrm{BP}}^{(i)} \) and \( \delta \VUmat{W}_{\mathrm{TP}}^{(i)} \) was computed for all the layers over the learning epochs. The terms \( \Delta_1 \left( \eta \right) \) and \(  \Delta_2 \left( \eta \right) \) were considered to be 0. Figure \ref{angle-bound} shows the development of the lower bound over the learning period. It is expressed as the upper bound on the angle, i. e. as the bound
+As can be seen in the figure, the angle between the back-propagation update and the target propagation update isn't close to 0 for the first layer. This phenomenon seems to contradict the claim of theorem \ref{targetprop_works}. In order to validate the implementation and to resolve this discrepancy, the lower bound on the cosine of the angle between \( \delta \VUmat{W}_{\mathrm{BP}}^{(i)} \) and \( \delta \VUmat{W}_{\mathrm{TP}}^{(i)} \) was computed for all the layers over the learning epochs. The terms \( \Delta_1 \left( \eta \right) \) and \(  \Delta_2 \left( \eta \right) \) were considered to be 0. Figure \ref{angle-bound} shows the development of the lower bound over the learning period. It is expressed as the upper bound on the angle, i. e. as the bound
 \[ \cos^{-1} \left( \frac{\lambda_{\mathrm{min}}}{\lambda_{\mathrm{max}}} \right) > \alpha \]
 Note that this upper bound considers the update of all parameters of the model, i. e. all the layers combined. Also note that due to the nature of the cosine function, the upper bound is invalid for angles over \( 90^\circ \).
 

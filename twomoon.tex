@@ -100,7 +100,7 @@ A reference model was implemented and trained using backpropagation. The model w
 
 \section{Explanation of the results}
 
-As a result of the architecture of a target-propagation model, the most crucial layer for the learning is the last layer, particularly the inverse mapping (i. e. the auto-encoder). The reasoning behind this claim is that if the calculated inverse function doesn't coincide with the actual inverse function, the computed target for the previous layer doesn't represent the desired target. That in turns means that the previous layer doesn't properly learn, which in turn makes its dual layer not learn the desired inverse, propagating the issue backwards through the whole model.
+As a result of the architecture of a target propagation model, the most crucial layer for the learning is the last layer, particularly the inverse mapping (i. e. the auto-encoder). The reasoning behind this claim is that if the calculated inverse function doesn't coincide with the actual inverse function, the computed target for the previous layer doesn't represent the desired target. That in turns means that the previous layer doesn't properly learn, which in turn makes its dual layer not learn the desired inverse, propagating the issue backwards through the whole model.
 
 Figures \ref{layer1_losses} and \ref{layer2_losses} show the layer-local loss function (see section \ref{targetprop_general}) and the dual layer-local loss function (see section \ref{vanilla_targetprop}) values over the learning period. The failure to learn the last layer inverse is clearly manifested in the relatively high values of the dual layer-local loss function of the second layer.
 
@@ -174,7 +174,7 @@ An interesting metric which might provide some insight into the workings of targ
 	\caption{Angle \( \alpha \) from theorem \ref{targetprop_works} (in degrees) over 2000 learning epochs}\label{angle}
 \end{figure}
 
-As can be seen in the figure, the angle between the backpropagation update and the targetpropagation update isn't close to 0 for the first layer. This phenomenon seems to contradict the claim of theorem \ref{targetprop_works}. In order to validate the implementation and to resolve this discrepancy, the lower bound on the cosine of the angle between \( \delta \VUmat{W}_{\mathrm{BP}}^{(i)} \) and \( \delta \VUmat{W}_{\mathrm{TP}}^{(i)} \) was computed for all the layers over the learning epochs. The terms \( \Delta_1 \left( \eta \right) \) and \(  \Delta_2 \left( \eta \right) \) were considered to be 0. Figure \ref{angle-bound} shows the development of the lower bound over the learning period. It is expressed as the upper bound on the angle, i. e. as the bound
+As can be seen in the figure, the angle between the backpropagation update and the target propagation update isn't close to 0 for the first layer. This phenomenon seems to contradict the claim of theorem \ref{targetprop_works}. In order to validate the implementation and to resolve this discrepancy, the lower bound on the cosine of the angle between \( \delta \VUmat{W}_{\mathrm{BP}}^{(i)} \) and \( \delta \VUmat{W}_{\mathrm{TP}}^{(i)} \) was computed for all the layers over the learning epochs. The terms \( \Delta_1 \left( \eta \right) \) and \(  \Delta_2 \left( \eta \right) \) were considered to be 0. Figure \ref{angle-bound} shows the development of the lower bound over the learning period. It is expressed as the upper bound on the angle, i. e. as the bound
 \[ \cos^{-1} \left( \frac{\lambda_{\mathrm{min}}}{\lambda_{\mathrm{max}}} \right) > \alpha \]
 Note that this upper bound considers the update of all parameters of the model, i. e. all the layers combined. Also note that due to the nature of the cosine function, the upper bound is invalid for angles over \( 90^\circ \).
 
@@ -204,7 +204,7 @@ The results of the previous section lead to the question of whether the model wo
 	\caption{Results of the model using LBFGS to set targets}\label{lbfgs}
 \end{figure}
 
-The data show that the model doesn't learn even when the close approximations of the actual inverses are used to generate the targets. This is strong evidence that the problem isn't caused by a failure to learn the approximate inverse function \( \widetilde{f}^{(i)} \) (although such a failure is not ruled out), but rather by an issue with the target-propagation algorithm as it was implemented.
+The data show that the model doesn't learn even when the close approximations of the actual inverses are used to generate the targets. This is strong evidence that the problem isn't caused by a failure to learn the approximate inverse function \( \widetilde{f}^{(i)} \) (although such a failure is not ruled out), but rather by an issue with the target propagation algorithm as it was implemented.
 
 \section{Difference target propagation}
 Figure \ref{difftargetprop} shows the results for the same model as described in section \ref{model} (using the ReLU activation function), only trained using the difference target propagation algorithm. The results imply that difference target propagation shares the shortcomings of the vanilla target propagation algorithm. This claim is further supported by the results of the tests proposed in this chapter, presented compactly in figure \ref{difftargetprop_tests}.

@@ -27,6 +27,8 @@ The model used to classify these samples was a layer of 16 neurons, followed by 
 
 To learn the inverse mappings the same model was used for both of the first two layers. This model consisted of a layer of 8 neurons followed by a layer with as many neurons as was the required input dimension. The second of those used identity as an activation function, the first used the same activation as the rest of the network. The inverse mapping for the softmax function consisted of a layer of 4 neurons followed by a layer of 2 neurons with the identity function as its activation. The mean squared error function was used as the dual layer-local loss function for all the inverse mappings. The noise inserted for the auto-encoder training was \( \varepsilon \sim N \left( 0, 0.2 \right) \). The step size for the last layer target (see equation \ref{targetprop_last_layer_target}) was \( \eta = 0.5 \).
 
+The model was implemented in the Julia language (see \cite{bezanson_julia:_2017}), using a modified version of the Flux framework (see \cite{innes_flux:_2018}).
+
 \section{Results}
 
 The model was tested with 3 activation functions. For each of these activation functions, a heatmap of predictions in the whole \( \left( 0, 1 \right) \times \left( 0, 1 \right) \) space was plotted to visualise the results. Also, a record of model loss on the testing dataset was kept, although no training was ever done on the testing dataset. For the results, see figures \ref{tanh}, \ref{relu}, \ref{swish}.
